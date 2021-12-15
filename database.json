@@ -1,7 +1,7 @@
 {
-    "host": "youngdb.cdga0jdfgjjn.ap-northeast-2.rds.amazonaws.com",
-    "user": "admin",
-    "password": "likelion147",
-    "post": "3306",
-    "database": "youngDB"
+    "host": "****",
+    "user": "****",
+    "password": "****",
+    "post": "****",
+    "database": "****"
 }
