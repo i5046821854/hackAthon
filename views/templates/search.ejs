@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검색</title>
+    <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
+    <style>
+        table,
+        th,
+        td {
+            border: 2px solid darkgray;
+            border-collapse: collapse
+        }
+        
+        tr {
+            height: "30";
+        }
+        
+        th {
+            background-color: lightcyan;
+        }
+        
+        table {
+            width: 100%;
+            text-align: center;
+        }
+        
+        button {
+            display: block;
+            margin: auto;
+            width: 30%;
+            margin-top: 25px;
+            background-color: lightcyan;
+            font-size: larger;
+        }
+        
+        .category {
+            background-color: lightcyan;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../partials/header', {menu:"data", login: "temp"}) %>
+        <h1 style="text-align: center; margin-top:2%">조회</h1>
+        <table>
+            <tbody>
+                <th>브랜드</th>
+                <th>상품명</th>
+                <th>사이즈(규격)</th>
+                <th>디자인</th>
+                <th>끈</th>
+                <th>필터</th>
+                <th>사이즈(대중소)</th>
+                <th>색상</th>
+                <th>홈페이지</th>
+                <% dataArr.forEach(function(data){ %>
+                    <tr>
+                        <td>
+                            <%= data.brand %>
+                        </td>
+                        <td>
+                            <%= data.prodName %>
+                        </td>
+                        <td>
+                            <%= data.spec %>
+                        </td>
+                        <td>
+                            <%= data.design %>
+                        </td>
+                        <td>
+                            <%= data.strap %>
+                        </td>
+                        <td>
+                            <%= data.kf %>
+                        </td>
+                        <td>
+                            <%= data.size %>
+                        </td>
+                        <td>
+                            <%= data.color %>
+                        </td>
+                        <td>
+                            <a href="<%= data.homepage %>">
+                                <%= data.homepage %>
+                            </a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+</body>
+
+</html>

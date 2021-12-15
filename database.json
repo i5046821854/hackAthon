@@ -3,5 +3,5 @@
     "user": "admin",
     "password": "likelion147",
     "post": "3306",
-    "database": "youngdb"
+    "database": "youngDB"
 }
