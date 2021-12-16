@@ -10,7 +10,8 @@
 </head>
 
 <body>
-    <%- include('../partials/header', {menu:"login", login : "temp" }) %>
+    <% var logind = login; %>
+    <%- include('../partials/header', {menu:"login", login : logind }) %>
         <h1 style="text-align: center; margin-top:2%">로그인</h1>
         <div style="text-align: center; width: 100%; height: 100%">
             <form method="POST" action="/login">
