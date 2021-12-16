@@ -10,9 +10,10 @@
 </head>
 
 <body>
-    <%- include('../partials/header', {menu:"signup", login: "temp"}) %>
+    <% var logind = login; %>
+    <%- include('../partials/header', {menu:"signup", login: logind}) %>
         <h1 style="text-align: center; margin-top:2%">회원가입 페이지</h1>
-
+        
 </body>
 
 </html>
