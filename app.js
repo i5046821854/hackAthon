@@ -30,6 +30,8 @@ app.use(express.static(Dirpath))
 
 const PORT = 3000 || process.env.PORT
 
+var islogin = false;
+
 //이미지 파일 저장 multer 미들웨어
 const upload = multer({
     dest: "image"
@@ -93,40 +95,55 @@ app.get('', (req, res) => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //회원가입 페이지 (get)
 app.get('/signup', (req, res) => {
-    res.render('signup.ejs')
+    
+    
+    res.render('signup.ejs', {
+        login: islogin
+    })
 })
 
 //회원가입 페이지 (post)
 app.post('/signup', (req, res) => {
+    
+    
     res.redirect('login')
 })
 
 //공구 페이지 (get)
 app.get('/purchase', (req, res) => {
-
-    res.render('purchase.ejs')
+    
+    
+    res.render('purchase.ejs', {
+        login: islogin
+    })
 })
 
 
 //마이 페이지 (get)
-app.get('/myPage', (req, res) => {
-
-    res.render('myPage.ejs')
+app.get('/myPage',auth, (req, res) => {
+    
+    
+    res.render('myPage.ejs', {
+        login: islogin
+    })
 })
 
 //후기 페이지 (get)
 app.get('/review', (req, res) => {
-
-        res.render('review.ejs')
+    
+    
+    res.render('review.ejs', {
+        login: islogin
     })
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+})
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 //로그인 페이지 (get)
 app.get('/login', (req, res) => {
-
-    res.render('login.ejs')
-
+      res.render('login.ejs', {
+          login: islogin
+      })
 })
 
 
@@ -160,9 +177,10 @@ app.post('/login', async(req, res) => {
     var pw = req.body.pwd;
     const result = await login(id, pw);
     if (result.id) { //해당 id/pw로 이루어진 계정 존재 시
+        islogin = true;
         req.session.user = result
         res.cookie('cnt', 0)
-        if (result.authority <= 3) { //권한에 따라 페이지 로드 
+        if (result.authority <= 3) { //권한에 따라 페이지 로드
             res.redirect("/search")
         } else {
             res.redirect('/search')
@@ -181,6 +199,7 @@ app.post('/login', async(req, res) => {
 //로그아웃 페이지 (get)
 app.get('/logout', (req, res) => {
     req.session.user = undefined;
+    islogin = false;
     res.send("<script>alert(`로그아웃되었습니다.\n다시 로그인 해주세요`);window.location.href='/login';</script>")
 })
 
@@ -188,11 +207,9 @@ app.get('/logout', (req, res) => {
 //일반사용자 조회 페이지
 app.get('/search', (req, res) => {
     let sql = `select * from MASK`
-
     db.query(sql, async(err, result) => {
         if (err)
             console.log(err);
-        req.session.user = result[0]
         res.render('search.ejs', {
             dataArr: result,
             login: req.session.user
