@@ -10,8 +10,9 @@
 </head>
 
 <body>
-    <%- include('../partials/header', {menu:"review", login: "temp"}) %>
-        <h1 style="text-align: center; margin-top:2%">후기 게시판</h1>
+    <% var logind = login; %>
+        <%- include('../partials/header', {menu:"review", login : logind }) %>
+            <h1 style="text-align: center; margin-top:2%">후기 게시판</h1>
 
 </body>
 
