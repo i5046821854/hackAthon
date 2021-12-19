@@ -41,24 +41,24 @@
             <h1 style="text-align: center; margin-top:2%">조회</h1>
             <form>
                 <select name="strap" id="strap">
-                    <option selected disabled hidden>끈</option>
+                    <option selected disabled hidden value="">끈</option>
                     <option value="동그란 고무줄">동그란 고무줄</option>
                     <option value="납작한 고무줄">납작한 고무줄</option>
                     <option value="부직포">부직포</option>
                 </select>
                 <select name="design" id="design">
-                    <option selected disabled hidden>디자인</option>
+                    <option selected disabled hidden value="">디자인</option>
                     <option value="새부리형">새부리형</option>
                     <option value="일반형">일반형</option>
                 </select>
                 <select name="filter" id="filter">
-                    <option selected disabled hidden>필터</option>
+                    <option selected disabled hidden value="">필터</option>
                     <option value="KF-94">KF-94</option>
                     <option value="KF-80">KF-80</option>
                     <option value="KF-AD">KF-AD</option>
                 </select>
                 <select name="size" id="size">
-                    <option selected disabled hidden>사이즈</option>
+                    <option selected disabled hidden value="">사이즈</option>
                     <option value="대형">대형</option>
                     <option value="중형">중형</option>
                     <option value="소형">소형</option>
@@ -67,20 +67,27 @@
             </form>
             <script>
                 document.getElementById("submit").onclick = function() {
+                    var data = {};
+                    if (document.getElementById('strap').value)
+                        data.strap = document.getElementById('strap').value
+                    if (document.getElementById('design').value)
+                        data.design = document.getElementById('design').value
+                    if (document.getElementById('filter').value)
+                        data.filter = document.getElementById('filter').value
+                    if (document.getElementById('size').value)
+                        data.size = document.getElementById('size').value
                     alert("asd");
                     $.ajax({
                         type: "POST",
                         url: "/search",
-                        data: {
-                            strap: document.getElementById('strap').value,
-                            design: document.getElementById('design').value,
-                            filter: document.getElementById('filter').value,
-                            size: document.getElementById('size').value
-                        },
+                        data,
                         success: function(result) {
                             $('tbody').empty();
-                            for (var data in result) {
-                                console.log(result)
+                            var data = 1
+                            if (result[0] == "실패")
+                                alert("검색 결과가 없어 유사한 마스크가 추천됩니다")
+                            while (data != result.length) {
+                                console.log(data)
                                 $('tbody').append('<tr>');
                                 $('tbody').append('<td>' + result[data].brand + '</td>');
                                 $('tbody').append('<td onclick="location.href=`/detail?prod=' + result[data].idx + '`">' + result[data].prodName + '</td>');
@@ -94,7 +101,25 @@
                                     result[data].homepage = ''
                                 $('tbody').append('<td><a href="' + result[data].homepage + '">' + result[data].homepage + '</a></td>');
                                 $('tbody').append('</tr>');
+                                data++;
                             }
+                            /*
+                                                        for (var data in result) {
+                                                            console.log(data)
+                                                            $('tbody').append('<tr>');
+                                                            $('tbody').append('<td>' + result[data].brand + '</td>');
+                                                            $('tbody').append('<td onclick="location.href=`/detail?prod=' + result[data].idx + '`">' + result[data].prodName + '</td>');
+                                                            $('tbody').append('<td>' + result[data].spec + '</td>');
+                                                            $('tbody').append('<td>' + result[data].design + '</td>');
+                                                            $('tbody').append('<td>' + result[data].strap + '</td>');
+                                                            $('tbody').append('<td>' + result[data].kf + '</td>');
+                                                            $('tbody').append('<td>' + result[data].size + '</td>');
+                                                            $('tbody').append('<td>' + result[data].color + '</td>');
+                                                            if (!result[data].homepage)
+                                                                result[data].homepage = ''
+                                                            $('tbody').append('<td><a href="' + result[data].homepage + '">' + result[data].homepage + '</a></td>');
+                                                            $('tbody').append('</tr>');
+                                                        }*/
                         },
                         error: function() {}
                     });

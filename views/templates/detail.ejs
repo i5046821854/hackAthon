@@ -179,7 +179,9 @@
 <script>
     const submit = document.getElementById('check')
     if (!(<%= login %>))
-        document.getElementById('switch').style.display = "none"
+        document.getElementById('switch').style.display = "none";
+    else if ((<%= check %>))
+        submit.checked = true;
     var check = "1";
     submit.onclick = function() {
         if (!submit.checked)

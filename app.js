@@ -42,7 +42,8 @@ const db = mysql.createConnection({
     host: conf.host,
     user: conf.user,
     password: conf.password,
-    database: conf.database
+    database: conf.database,
+    multipleStatements: true
 })
 
 
@@ -122,10 +123,16 @@ app.get('/purchase', (req, res) => {
 //마이 페이지 (get)
 app.get('/myPage', auth, (req, res) => {
 
-
-    res.render('myPage.ejs', {
-        login: islogin
+    let sql = `select b.* from CART as a inner join MASK as b ON a.prodIdx = b.idx WHERE id = '${req.session.user.id}'`
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        res.render('myPage.ejs', {
+            dataArr: result,
+            login: req.session.user
+        })
     })
+
 })
 
 //후기 페이지 (get)
@@ -207,18 +214,37 @@ app.get('/logout', (req, res) => {
 
 //로그아웃 페이지 (get)
 app.get('/detail', (req, res) => {
-    console.log(req.query.prod)
-    let sql = `select * from MASK WHERE idx = ${req.query.prod}`
-    db.query(sql, async(err, result) => {
-        if (err)
-            console.log(err);
-        console.log(sql);
-        console.log(result);
-        res.render('detail.ejs', {
-            data: result[0],
-            login: islogin
+    let sql = `select * from MASK WHERE idx = ${req.query.prod};`
+    if (islogin) {
+        var sql2 = `select COUNT(*) from CART WHERE prodIdx = ${req.query.prod} AND id = '${req.session.user.id}'`
+        var checked = true;
+        db.query(sql + sql2, async(err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            if (result[1][0]['COUNT(*)'] == 0)
+                checked = false;
+            console.log(result[1][0]['COUNT(*)'])
+            console.log(checked)
+            res.render('detail.ejs', {
+                data: result[0][0],
+                check: checked,
+                login: islogin
+            })
         })
-    })
+    } else {
+        db.query(sql, async(err, result) => {
+            if (err)
+                console.log(err);
+            console.log(sql);
+            console.log(result);
+            res.render('detail.ejs', {
+                data: result[0],
+                check: false,
+                login: islogin
+            })
+        })
+    }
 })
 
 
@@ -236,6 +262,44 @@ app.get('/search', (req, res) => {
 })
 
 
+app.post('/search', (req, res) => {
+    const data = req.body
+    let sql = `select * from MASK`
+    if (Object.keys(data).length != 0) {
+        sql = sql + ' WHERE 1=1 '
+        if (data.strap)
+            sql = sql + ` AND strap = '${data.strap}' `;
+        if (data.design)
+            sql = sql + ` AND design = '${data.design}'`;
+        if (data.filter)
+            sql = sql + ` AND kf = '${data.filter}' `;
+        if (data.size)
+            sql = sql + ` AND size = '${data.size}'`;
+    }
+    console.log(sql);
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        console.log(result.length)
+        if (result.length == 0) {
+            sql = `select ((select if(a.strap = '${data.strap}',b.strapnum,0)) + (select if(a.design = '${data.design}',b.shapenum,0)) + (select if(a.kf = '${data.filter}',b.kfnum,0)) + (select if(a.size = '${data.size}',b.colornum,0))) as close, a.* from MASK as a, USER as b WHERE a.strap = '${data.strap}' OR a.design = '${data.design}' OR a.kf = '${data.filter}' OR a.size = '${data.size}' ORDER BY close DESC;`
+            console.log(sql);
+            db.query(sql, async(err, result) => {
+                if (err)
+                    console.log(err);
+                console.log(result);
+                result.unshift("실패")
+                res.send(result);
+            })
+        } else {
+            result.unshift("성공")
+            res.send(result);
+        }
+    })
+})
+
+
+
 app.post('/check', (req, res) => {
     console.log(req.body);
     const idx = Number(req.body.idx)
@@ -249,20 +313,6 @@ app.post('/check', (req, res) => {
         res.send(result)
     })
 });
-
-
-app.post('/search', (req, res) => {
-    const data = req.body
-    console.log("asd");
-    let sql = `select * from MASK WHERE strap = '${data.strap}' AND design = '${data.design}'`
-    console.log(sql);
-    db.query(sql, async(err, result) => {
-        if (err)
-            console.log(err);
-        console.log(result)
-        res.send(result)
-    })
-})
 
 
 //회원정보 수정 페이지 (본인)
