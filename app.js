@@ -282,7 +282,7 @@ app.post('/search', (req, res) => {
             console.log(err);
         console.log(result.length)
         if (result.length == 0) {
-            sql = `select ((select if(a.strap = '${data.strap}',b.strapnum,0)) + (select if(a.design = '${data.design}',b.shapenum,0)) + (select if(a.kf = '${data.filter}',b.kfnum,0)) + (select if(a.size = '${data.size}',b.colornum,0))) as close, a.* from MASK as a, USER as b WHERE a.strap = '${data.strap}' OR a.design = '${data.design}' OR a.kf = '${data.filter}' OR a.size = '${data.size}' ORDER BY close DESC;`
+            sql = `select ((select if(a.strap = '${data.strap}',b.strapnum,0)) + (select if(a.design = '${data.design}',b.shapenum,0)) + (select if(a.kf = '${data.filter}',b.kfnum,0)) + (select if(a.size = '${data.size}',b.colornum,0))) as close, a.* from MASK as a, USER as b WHERE a.strap = '${data.strap}' OR a.design = '${data.design}' OR a.kf = '${data.filter}' OR a.size = '${data.size}' AND b.id = '${req.session.user.id}' ORDER BY close DESC;`
             console.log(sql);
             db.query(sql, async(err, result) => {
                 if (err)
