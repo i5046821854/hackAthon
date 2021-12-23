@@ -56,7 +56,7 @@
                 </div>
                 <% if (method == "recommend") { %>
                     <div class="recommended">
-                        <h3>마스크휴먼 님의 추천 마스크</h3>
+                        <h3><%= login.nickname %> 님의 추천 마스크</h3>
                         <ul>
                             <% recommendData.forEach(function(data){ %>
                                 <!-- 예시라 나중에 지우면 됨다 -->
