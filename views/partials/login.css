@@ -1,0 +1,190 @@
+:root {
+    
+    --text-color:#50514F;
+    --title-color:#080403;
+    --background-color:#FAF9F7;
+    --background-color2: #EDE4DE;
+    --point-color:#DED0C1;
+
+    --logo-font-size:55px;
+    --mini-font-size:14px;
+    --nav-font-size:20px;
+}
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+.personalList a, .navList a{
+    font-family: 'Gowun Dodum', sans-serif;
+    text-decoration: none;
+    color:var(--text-color);
+}
+
+.personalList, .navList {
+    font-family: 'Gowun Dodum', sans-serif;
+    padding-left: 0;
+    list-style: none;
+}
+
+.navContainer{
+    top: 0%;
+    font-family: 'Gowun Dodum', sans-serif;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding:10px 30px 20px 30px;
+    position:fixed;
+    background-color: var(--background-color);
+    z-index: 2;
+}
+
+.navContainer .logo{
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: var(--logo-font-size);
+}
+
+.navbar{
+    font-family: 'Gowun Dodum', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.personalList{
+    font-family: 'Gowun Dodum', sans-serif;
+    display: flex;
+    font-size: var(--mini-font-size);
+}
+
+.personalList li a{
+    font-family: 'Gowun Dodum', sans-serif;
+    padding:0 5px;
+}
+
+.personalList li::after{
+    font-family: 'Gowun Dodum', sans-serif;
+    content:"|";
+    font-size: 15px;
+    color:var(--text-color);
+}
+
+.personalList li:nth-child(3):after{
+    font-family: 'Gowun Dodum', sans-serif;
+    content: "";
+}
+
+.navList{
+    font-family: 'Gowun Dodum', sans-serif;
+    display: flex;
+    font-size: var(--nav-font-size);
+}
+
+.navList li {
+    font-family: 'Gowun Dodum', sans-serif;
+    margin-left:30px;
+    text-align: center; 
+}
+
+.navList li a{
+    font-family: 'Gowun Dodum', sans-serif;
+    position:relative;
+    padding: 4px;
+}
+
+.navList li a::after{
+    font-family: 'Gowun Dodum', sans-serif;
+    content:"";
+    width: 0%;
+    height: 2px;
+    position:absolute;
+    bottom:0;
+    left:0;
+    background-color: var(--point-color);
+    transition:0.4s;
+}
+
+.navList li a:hover:after{
+    font-family: 'Gowun Dodum', sans-serif;
+    width:100%;
+}
+
+/* contents */
+
+.login_body {
+    font-family: 'Gowun Dodum', sans-serif;
+    text-align: center;
+    margin: 160px;
+}
+
+form {
+    margin-top: 10px;
+}
+.id_tag {
+    font-family: 'Gowun Dodum', sans-serif;
+    align-content: center;
+}
+.id_tag > p {
+    font-family: 'Gowun Dodum', sans-serif;
+    display: inline-block;
+}
+.form-control {
+    font-family: 'Gowun Dodum', sans-serif;
+    display: inline-block;
+    background-color: var(--point-color);
+    border-radius:10px;
+    border:none;
+    width: 300px;
+    height: 45px;
+}
+input:focus {outline:none;}
+.Passw {
+    font-family: 'Gowun Dodum', sans-serif;
+    align-content: center;
+}
+.Passw > p {
+    font-family: 'Gowun Dodum', sans-serif;
+    display: inline-block;
+}
+.login_btn {
+    font-family: 'Gowun Dodum', sans-serif;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: var(--title-color);
+    color:white;        
+}
+
+
+/* footer */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+    height: 100px;
+    background-color: var(--title-color);
+    color: var(--background-color);
+}
+
+.footer .logo {
+    margin-top: 35px;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: var(--logo-font-size);
+    
+}
+
+.footer .copyright {
+    font-size: small;
+    margin-top: 30px;
+    
+}

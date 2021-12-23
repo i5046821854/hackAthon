@@ -1,0 +1,117 @@
+:root {
+    
+    --text-color:#50514F;
+    --title-color:#080403;
+    --background-color:#FAF9F7;
+    --background-color2: #EDE4DE;
+    --point-color:#DED0C1;
+
+    --logo-font-size:55px;
+    --mini-font-size:14px;
+    --nav-font-size:20px;
+}
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    color:var(--text-color);
+}
+
+ul{
+    padding-left: 0;
+    list-style: none;
+}
+
+.navContainer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding:10px 30px 20px 30px;
+    position:fixed;
+    background-color: var(--background-color);
+    z-index: 2;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+.logo{
+    font-size: var(--logo-font-size);
+}
+
+.navbar{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.personalList{
+    display: flex;
+    font-size: var(--mini-font-size);
+}
+
+.personalList li a{
+    padding:0 5px;
+}
+
+.personalList li::after{
+    content:"|";
+    font-size: 15px;
+    color:var(--text-color);
+}
+
+.personalList li:nth-child(3):after{
+    content: "";
+}
+
+.navList{
+    display: flex;
+    font-size: var(--nav-font-size);
+}
+
+.navList li {
+    margin-left:30px;
+    text-align: center; 
+}
+
+.navList li a{
+    position:relative;
+    padding: 4px;
+}
+
+.navList li a::after{
+    content:"";
+    width: 0%;
+    height: 2px;
+    position:absolute;
+    bottom:0;
+    left:0;
+    background-color: var(--point-color);
+    transition:0.4s;
+}
+
+.navList li a:hover:after{
+    width:100%;
+}
+
+
+/* footer */
+.footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    font-family: 'Gowun Dodum', sans-serif;
+    height: 100px;
+    background-color: #080403;
+    color: #FAF9F7;
+}
+
+.footer .copyright {
+    font-size: small;
+}

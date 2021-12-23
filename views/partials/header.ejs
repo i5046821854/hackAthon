@@ -1,0 +1,22 @@
+<div class="navContainer">
+    <span class="logo">로고</span>
+    <div class="navbar">
+        <ul class="personalList">
+            <% if (menu != "login") { %>
+                <% if (login) { %>
+                    <li><a href="/logout">로그아웃</a></li>
+                    <li><a href="/myPage">마이페이지</a></li>
+                    <% } else {%>
+                        <li><a href="/login">로그인</a></li>
+                        <% }} %>
+                            <% if (menu == "login") { %>
+                                <li><a href="/signup">회원가입</a></li>
+                                <% } %>
+        </ul>
+        <ul class="navList">
+            <li><a href="/search">마스크 탐색</a></li>
+            <li><a href="/purchase">마스크 공동구매</a></li>
+            <li><a href="/review">마스크 후기</a></li>
+        </ul>
+    </div>
+</div>

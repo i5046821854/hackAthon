@@ -1,0 +1,100 @@
+body{
+    background-color: var(--background-color);
+}
+
+/* board main */
+.board {
+    padding: 110px;
+    width:100%;
+    height:100%;
+    text-align: center;
+}
+
+.search-area {
+    padding: 10px;
+}
+
+/* 검색창 */
+.search-area .search-input {
+    font-family: 'Gowun Dodum', sans-serif;    
+    width: 60%;
+    border-radius: 20px;
+    border: 1px solid #B29471;
+    margin: 20px 20px;
+    padding: 10px;
+}
+
+.search-area .search-button {
+    position: relative;
+    left: -80px;
+    top: 0px;
+    background-color: #FAF9F7;
+    border: none;
+    cursor: pointer;
+    font-family: 'Gowun Dodum',sans-serif;
+}
+
+/* 검색 필터 */
+.search-filter select {
+    font-family: 'Gowun Dodum',sans-serif;
+    padding: 5px;
+    border: 1px solid #B29471;
+    border-radius: 10px;
+}
+
+/* 추천 마스크 */
+.recommended {
+    margin-top: 20px;
+    padding : 30px;
+    text-align: center;
+    background-color: var(--point-color);
+    font-family: "Gowun Dodum", sans-serif;
+}
+.recommended ul{
+    max-width: 90vw;
+    white-space: nowrap; 
+    overflow-x: auto; 
+    text-align: center;
+}
+
+.recommended ul .recommended-list{
+    display:inline-block; 
+    padding: 10px 20px; 
+    margin-right:10px;
+}
+
+
+.recommended ul .recommended-list img{
+    width: 150px;
+    height: 150px;
+}
+
+/* 검색 결과 */
+.search-result {
+    margin-top: 20px;
+    padding : 30px;
+    text-align: center;
+    background-color: var(--background-color);
+    font-family: "Gowun Dodum", sans-serif;
+}
+
+.search-result h3 {
+    padding-bottom: 20px;
+}
+.search-result ul{
+    max-width: 90vw;
+    white-space: wrap; 
+    overflow-x: auto; 
+    text-align: center;
+}
+
+.search-result ul .result-list{
+    display:inline-block; 
+    padding: 10px 20px; 
+    margin-right: 10px;
+}
+
+.search-result ul .result-list img{
+    width: 250px;
+    height: 250px;
+}

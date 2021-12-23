@@ -1,0 +1,266 @@
+:root {
+    
+    --text-color:#50514F;
+    --title-color:#080403;
+    --background-color:#FAF9F7;
+    --background-color2: #EDE4DE;
+    --point-color:#DED0C1;
+
+    --logo-font-size:55px;
+    --mini-font-size:14px;
+    --nav-font-size:20px;
+}
+
+body {
+    height: auto;
+    background-color: var(--background-color);
+    font-family: 'Gowun Dodum', sans-serif;
+    margin: 0;
+}
+
+
+
+/* navbar */
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    color:var(--text-color);
+}
+
+ul{
+    padding-left: 0;
+    list-style: none;
+}
+
+.navContainer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding:10px 30px 20px 30px;
+    position: fixed;
+    background-color: var(--background-color);
+    z-index: 2;
+}
+
+.logo{
+    font-size: var(--logo-font-size);
+}
+
+.navbar{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.personalList{
+    display: flex;
+    font-size: var(--mini-font-size);
+}
+
+.personalList li a{
+    padding:0 5px;
+}
+
+.personalList li::after{
+    content:"|";
+    font-size: 15px;
+    color:var(--text-color);
+}
+
+.personalList li:nth-child(3):after{
+    content: "";
+}
+
+.navList{
+    display: flex;
+    font-size: var(--nav-font-size);
+}
+
+.navList li {
+    margin-left:30px;
+    text-align: center; 
+}
+
+.navList li a{
+    position:relative;
+    padding: 4px;
+}
+
+.navList li a::after{
+    content:"";
+    width: 0%;
+    height: 2px;
+    position:absolute;
+    bottom:0;
+    left:0;
+    background-color: var(--point-color);
+    transition:0.4s;
+}
+
+.navList li a:hover:after{
+    width:100%;
+}
+/* main */
+.mypage-main {
+    position: absolute;
+    margin-top: 110px;
+    width:100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+/* 개인정보 확인 및 수정자리 */
+.mypage-main .info {
+    height: 100%;
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-right: 10px;
+    flex-basis: 400px;
+    border-right: 1px solid #B29471;
+}
+
+.mypage-main .info ul {
+    list-style: none;
+}
+
+.mypage-main .info ul li {
+    margin: 10px;
+}
+
+.mypage-main .info ul .prof-img {
+    margin-bottom: 25px;
+    margin-left: 0px;
+    width: 200px;
+    height: 100px;
+    padding: 20px;
+    border: 2px solid #B29471;
+}
+
+.mypage-main .info button {
+    width: 250px;
+    margin-left: 10px;
+    margin-top: 15px;
+    font-family: 'Gowun Dodum', sans-serif;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 40px 10px;
+	border: 1px solid #B29471;
+    transition:all .5s ease;
+	
+}
+.mypage-main .info button:hover {
+    background-color: #B29471;
+    color: #FFFFFF;
+	opacity: 0.8;
+}
+
+/* 내가 쓴 글 및 찜한 마스크 확인 자리 */
+.mypage-main .list {
+    margin: 10px;
+    flex-grow: 4;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 내가 쓴 글 구분 */
+.mypage-main .list .post {
+    border-bottom: 1px solid #B29471;
+    flex-basis: 220px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.mypage-main .list .post ul{
+    display: flex;
+    flex-direction: column;
+}
+
+.mypage-main .list .post .group-buy {
+    flex-basis: 50px;
+    margin-bottom: 20px;
+}
+
+.mypage-main .list .post .group-buy .group-buy-post{
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+.mypage-main .list .post .group-buy .group-buy-post:hover {
+    color: #B29471;
+	opacity: 0.8;
+} 
+
+.mypage-main .list .post .review {
+    flex-basis: 50px;
+    margin-bottom: 20px;
+}
+
+.mypage-main .list .post .review .review-post{
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+.mypage-main .list .post .review .review-post:hover{
+    color: #B29471;
+	opacity: 0.8;
+} 
+
+/* 찜한 마스크 구분 */
+.mypage-main .list .dibs {
+    flex-grow: 2;
+    flex-shrink: 0;
+}
+
+.mypage-main .list .dibs ul{
+    max-width: 800px;
+    white-space: nowrap; 
+    overflow-x: auto; 
+    text-align: center;
+}
+
+.mypage-main .list .dibs ul .dibs-list{
+    display:inline-block; 
+    padding: 10px 20px; 
+    /* background: #B29471;  */
+    margin-right:10px;
+}
+
+
+.mypage-main .list .dibs ul .dibs-list img{
+    width: 150px;
+    height: 150px;
+}
+
+/* footer */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+    height: 100px;
+    background-color: #080403;
+    color: #FAF9F7;
+}
+
+.footer .footer-logo {
+    margin-top: 35px;
+    
+}
+
+.footer .copyright {
+    font-size: small;
+    margin-top: 30px;
+    
+}

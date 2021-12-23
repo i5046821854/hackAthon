@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">    
+    <link rel="stylesheet" type="text/css" href="/views/partials/main.css">
+</head>
+<body>
+    <!-- header part -->
+    <% var logind = login; %>
+        <%- include('../partials/header', {menu:"main", login : logind }) %>
+<!-- body part -->
+<div class="body_container">
+
+    <!-- 1. banner part -->
+    <div class="img_container">
+        <div class="banner_contents">
+            <span class="texts">당신의 마스크가<br> 불편하다면?</span>
+            <a href="/search"" id="linkToSearch">SEACRH</a>
+        </div>
+        <img src="image/image1.png" alt="mainbanner"/>
+    </div>
+    <div class="background"></div>
+
+    <!-- 2. intro part -->
+    <div class="intro_container">
+        <div class="intro_img">
+            <img src="image/image2.png" alt="intro_image" class="intro_image">
+            <div class="img_background"></div>
+        </div>
+        <div class="intro_text">
+            <span class="texts_title">우리 생활 필수템 마스크,</span>
+            <span class="texts_title">내맘대로 골라 쓰자!</span>
+            <div class="texts_contents">
+                <span><i class="fas fa-check-circle"></i>다양한 종류의 마스크 맞춤 검색 서비스</span>
+                <span><i class="fas fa-check-circle"></i>합리적인 가격의 공동구매 서비스</span>
+                <span><i class="fas fa-check-circle"></i>실제 이용자의 여러 후기를 통한 마스크 선택</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. info part -->
+    <div class="info_container">
+        <div class="content">
+            <img src="image/content1.png" alt="content1" class="title_img">
+            <div class="contents_container">
+                <span class="contents_title"><i class="fas fa-exclamation-circle"></i>올바른 마스크 착용법</span>
+                <p>
+                    마스크를 착용할 때는 우선 손을 깨끗이 씻고 <span id="highlight">입과 코를 완전히 가리도록 하고</span>, 얼굴과 마스크 사이에 틈이 없는지 확인해야 합니다. 
+                    마스크 착용 중에는 마스크를 만지지 않도록 하고, 만약 만졌을 경우에는 손을 깨끗이 씻어야 합니다.
+                    마스크를 착용하였으나 입과 코를 완전히 가리지 않는 경우는 미착용으로 간주합니다.
+                </p>
+            </div>
+            
+        </div>
+        <div class="content">
+            <img src="image/content2.png" alt="content2" class="title_img">
+            <div class="contents_container">
+                <span class="contents_title"><i class="fas fa-exclamation-circle"></i>마스크 종류</span>
+                <p>
+                    코로나19 상황에서 마스크를 착용할 때에는 <span id="highlight">보건용 마스크나 수술용 마스크, 비말차단용 마스크</span>를 사용하는 것이 바람직합니다. 
+                    미세입자 차단은 KF94 〉 KF80 〉 비말차단용·수술용 순으로 성능이 있습니다. 의약외품 마스크는 미세입자나 비말 등의 차단 성능이 검증된 제품으로, 구매 시 반드시 ‘의약외품’ 표시 확인이 필요합니다. 
+                    만약 의약외품 마스크가 없을 때는 천 마스크나 일회용 마스크 등과 같은 공산품 마스크도 도움이 되지만 공산품 마스크는 비말차단 성능이 공식적으로 입증되지는 않았습니다.
+                </p>
+            </div>
+        </div>
+        <div class="content">
+            <img src="image/content3.png" alt="content3" class="title_img">
+            <div class="contents_container">
+                <span class="contents_title"><i class="fas fa-exclamation-circle"></i>상황별 추천 마스크</span>
+                <p>
+                의료 관련 상황일 경우 (코로나19 환자를 돌보는 경우) 보건용 마스크인 KF94가 필수적이며,
+                생활 방역 상황에서는 밀폐, 밀집, 많은 대화로 비말 생성 우려가 높은 경우일 수록 KF80 이상의 보건용 마스크가 우선적으로 권장됩니다. 
+                더운 여름철이나 장시간 착용해야하는 환경 혹은 호흡이 불편한 경우는 가볍고 통기성이 좋은 마스크가 권장됩니다.
+                KF지수가 높을수록 입자가 작은 먼지 차단율이 높지만, 차단율이 높으면 호흡이 어려울 수 있기 때문에 개인의 상황에 따라 선택해야 합니다.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- footer -->
+<%- include('../partials/footer') %>
+</body>
+</html>

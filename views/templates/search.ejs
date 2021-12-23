@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href="/views/partials/search.css" type="text/css" rel="stylesheet">
+    <link href="/views/partials/headerFooter.css" type="text/css" rel="stylesheet">
+    <title>마스크 탐색</title>
+    <script src="/js/search.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+
+<body>
+    <% var logind = login; %>
+        <%- include('../partials/header', {menu:"search", login: logind}) %>
+            <div class="board">
+                <div class="search-area">
+                    <input type="text" placeholder="마스크 검색" class="search-input" onKeyDown="pressEnter()" id="text"></input>
+                    <!-- <img src = "search-solid.svg" style="width: 30px; height: 30px;" class="search-button"></img> -->
+                    <button type="button" class="search-button" id="submit" onclick="search()"> 검색 </button>
+                </div>
+                <div class="search-filter">
+                    <select class="mask-design" name="mask-design" id="design">
+                            <option selected disabled hidden value="">디자인</option>
+                            <option value="새부리형">새부리형</option>
+                            <option value="일반형">일반형</option>
+                            <option value="기타">기타</option>
+                            
+                        </select>
+                    <select class="mask-strap" name="mask-strap" id="strap">
+                            <option selected disabled hidden value="">스트랩 종류</option>
+                            <option value="납작한 고무줄">납작한 고무줄</option>
+                            <option value="동그란 고무줄">동그란 고무줄</option>
+                            <option value="부직포">부직포</option>
+                            <option value="기타">기타</option>
+                        </select>
+                    <select class="mask-size" name="mask-size" id="size">
+                            <option selected disabled hidden value="">사이즈</option>
+                            <option value="대형">대형</option>
+                            <option value="중형">중형</option>
+                            <option value="소형">소형</option>
+                            <option value="기타">기타</option>
+                        </select>
+                    <select class="KF-level" name="KF-level" id="filter"> 
+                            <option selected disabled hidden value="">KF 필터</option>
+                            <option value="KF-94">KF-94</option>
+                            <option value="KF-80">KF-80</option>
+                            <option value="KF-AD">KF-AD</option>
+                            <option value="기타">기타</option>
+                        </select>
+                </div>
+                <% if (method == "recommend") { %>
+                    <div class="recommended">
+                        <h3>마스크휴먼 님의 추천 마스크</h3>
+                        <ul>
+                            <% recommendData.forEach(function(data){ %>
+                                <!-- 예시라 나중에 지우면 됨다 -->
+                                <li class="recommended-list" onclick="location.href=`/detail?prod=' + <%= data.idx %> + '`">
+                                    <figure>
+                                        <img src="/image/mask.jpg">
+                                        <figcaption>
+                                            <%= data.prodName %> /
+                                                <%= data.size %> /
+                                                    <%= data.color %>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                                <% }) %>
+                        </ul>
+                    </div>
+                    <% } %>
+                        <div class="search-result">
+                            <h3>검색 결과</h3>
+                            <ul id='search'>
+                                <% dataArr.forEach(function(data){ %>
+                                    <!-- 예시라 나중에 지우면 됨다 -->
+                                    <li class="result-list" onclick="location.href=`/detail?prod=' + <%= data.idx %> + '`">
+                                        <figure>
+                                            <img src="/image/mask.jpg">
+                                            <figcaption>
+                                                <%= data.brand %> /
+                                                    <%= data.size %> /
+                                                        <%= data.color %>
+                                            </figcaption>
+                                        </figure>
+                                    </li>
+                                    <% }) %>
+                            </ul>
+                        </div>
+                        <div class="footer">
+                            <div class="logo">LOGO</div>
+                            <div class="copyright">
+                                COPYRIGHT ⓒ 2021 LIKELION SUNGKYUNKWAN UNIV. ALL RIGHTS RESERVED. <br> CONTACT. e-mail : wisdom2889@g.skku.edu
+                            </div>
+                        </div>
+            </div>
+
+</body>
+
+</html>
