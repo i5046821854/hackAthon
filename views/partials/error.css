@@ -1,0 +1,23 @@
+.error {
+    text-align: center;
+    padding: 275px 110px;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+.error .home {
+    width: 250px;
+    margin-left: 10px;
+    margin-top: 15px;
+    font-family: 'Gowun Dodum', sans-serif;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 40px 10px;
+    border: 1px solid #B29471;
+    transition: all .5s ease;
+}
+
+.error .home:hover {
+    background-color: #B29471;
+    color: #FFFFFF;
+    opacity: 0.8;
+}

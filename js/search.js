@@ -20,7 +20,7 @@ function search() {
                 alert("검색 결과가 없어 유사한 마스크가 추천됩니다")
             while (data != result.length) {
                 console.log(data)
-                $('#search').append('<li class="result-list" onclick="location.href=`/detail?prod=' + result[data].idx + '`""> <figure> <img src="image/mask.jpg"> <figcaption>' + result[data].brand + '/' + result[data].size + '/' + result[data].color + '</figcaption> </figure> </li>');
+                $('#search').append('<li class="result-list" onclick="location.href=`/detail?prod=' + result[data].idx + '`""> <figure> <img src="/image/mask.jpg"> <figcaption>' + result[data].brand + '/' + result[data].size + '/' + result[data].color + '</figcaption> </figure> </li>');
                 data++;
             }
         },

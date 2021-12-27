@@ -5,15 +5,83 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>후기</title>
-    <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href="/views/partials/review.css" rel="stylesheet">
+    <title>review</title>
 </head>
 
 <body>
     <% var logind = login; %>
         <%- include('../partials/header', {menu:"review", login : logind }) %>
-            <h1 style="text-align: center; margin-top:2%">후기 게시판</h1>
+            <div class='all-stuff'>
+                <!-- <div class="search-zone">
+                <input class="rsearching" type="text" name="review-search">
+                <button class = "search-button">검색</button>
+            </div> -->
+                <h3>후기 게시판</h3>
 
+                <button class="new-review"><a href="review_writing.html">후기 쓰기</a> </button>
+
+                <div class="review-filter">
+                    <label>끈</label>
+                    <select id='mask-strap'>
+                        <option value='동그란 고무줄'>동그란 고무줄</option>
+                        <option value='납작한 고무줄'>납작한 고무줄</option>
+                        <option value='부직포'>부직포</option>
+                        <option value='기타'>기타</option>
+                    </select>
+                    <label>등급</label>
+                    <select id='KF-level'>
+                        <option value='KF-94'>KF-94</option>
+                        <option value='KF-80'>KF-80</option>
+                        <option value='KF-AD'>KF-AD</option>
+                        <option value='덴탈'>덴탈</option>
+                        <option value='기타'>기타</option>
+                    </select>
+                    <label>대중소</label>
+                    <select id='mask-size'>
+                        <option value='대'>대</option>
+                        <option value='중'>중</option>
+                        <option value='소'>소</option>
+                    </select>
+                    <label>모양</label>
+                    <select id='mask-design'>
+                        <option value='일반형'>일반형</option>
+                        <option value='새부리형'>새부리형</option>
+                        <option value='기타'>기타</option>
+                    </select>
+                </div>
+                <% dataArr.forEach(function(data){ %>
+                    <% var tag = hashtag.filter(function(each){ return each.postid == data.idx}); console.log(tag); %>
+                        <div class='review-container'>
+                            <div class="review-contents">
+                                <div class='review-image'>
+                                    <img src="images/fff.png" width="350" height="300">
+                                </div>
+                                <div class='review-text'>
+                                    <p>ID :
+                                        <%= data.id %>
+                                    </p>
+                                    <p>제목 :
+                                        <%= data.title %>
+                                    </p>
+                                    <p>내용 :
+                                        <%= data.contents %>
+                                    </p>
+                                </div>
+                                <br>
+                                <div class="review-hashtag">
+                                    <% tag.forEach(function(each){ %>
+                                        <a>#<%= each.tag %></a>
+                                        <% }) %>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+            </div>
+            <%- include('../partials/footer') %>
 </body>
 
 </html>
