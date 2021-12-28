@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/views/partials/purchase_input.css">
+    <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
+    <title>공구 글 작성</title>
+</head>
+
+<body>
+    <!-- header part -->
+    <% var logind = login; %>
+        <%- include('../partials/header', {menu:"signup", login: logind}) %>
+
+
+            <!-- contents part -->
+
+            <div class="purchase_input_page_container">
+                <div class="purchase_input_page">
+                    <!-- 목록으로 되돌아가기 -->
+                    <a href="#" class="goback_btn"><i class="fas fa-angle-double-left"></i>목록으로</a>
+                    <span class="page_title">공구글 작성</span>
+
+                    <form method="POST" action="/purchase_input">
+                        <!-- 게시물 내용 부분 -->
+                        <table class="contents_container">
+                            <colgroup>
+                                <col style="width:25%">
+                                <col style="width:25%">
+                                <col style="width:25%">
+                                <col style="width:25%">
+                            </colgroup>
+
+                            <tr>
+                                <td colspan="3" class="contents_title"><input type="text" name="title" placeholder="제목을 입력해주세요."></td>
+                                <td class="link_container"><input type="text" name="link" placeholder="구글폼 링크" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="mask">
+                                    <input type="text" id="mask" name="mask" placeholder="마스크 제품 이름" onclick="showPopup()" readonly>
+                                </td>
+                                <input type='hidden' id="hidden" name="maskIdx">
+                                <script>
+                                    function showPopup() {
+                                        window.open("purchase_search", "a", "width=800, height=1200, left=100, top=50");
+                                    }
+                                </script>
+                                <td class="area">
+                                    <select id="area" name="area" class="area_select">
+                                    <option selected disabled hidden value="">지역</option>
+                                    <option value="서울">서울</option>
+                                    <option value="부산">부산</option>
+                                    <option value="대구">대구</option>
+                                    <option value="인천">인천</option>
+                                    <option value="광주">광주</option>
+                                    <option value="대전">대전</option>
+                                    <option value="울산">울산</option>
+                                    <option value="경기">경기</option>
+                                    <option value="강원">강원</option>
+                                    <option value="세종">세종</option>
+                                    <option value="전북">전북</option>
+                                    <option value="전남">전남</option>
+                                    <option value="충북">충북</option>
+                                    <option value="충남">충남</option>
+                                    <option value="경남">경남</option>
+                                    <option value="경북">경북</option>
+                                    <option value="제주">제주</option>
+                                    </select>
+                                </td>
+                                <td class="people">
+                                    <input type="number" placeholder="참여 인원" name="people">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="introduce">
+                                    <textarea placeholder="공구에 대한 설명을 적어주세요." name="description"></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <button id="submit_btn" type="submit">등록하기</button>
+                    </form>
+                </div>
+            </div>
+
+            <%- include('../partials/footer') %>
+
+                <!-- footer -->
+</body>
+
+</html>

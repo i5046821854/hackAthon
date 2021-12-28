@@ -1,0 +1,98 @@
+:root {
+    --text-color:#50514F;
+    --title-color:#080403;
+
+    --background-color:#FAF9F7;
+    --background-color2: #EDE4DE;
+
+    --btn-color:#B29471;
+    --main-color:#DED0C1;
+    
+    --contents-padding:40px;
+   
+    --title-font-size:22px;
+}
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+body{
+    margin:0;
+    font-family: 'Gowun Dodum', sans-serif;
+    background-color: var(--background-color);
+}
+
+.purchase_detail_page_container{
+    width:100%;
+    padding:90px 0;
+    background-color: var(--background-color);
+}
+
+.purchase_detail_page{
+    width:100%;
+    padding:var(--contents-padding);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.purchase_detail_page .goback_btn{
+    align-self: flex-start;
+    color:var(--main-color);
+    margin-bottom: 10px;
+    margin-left:50px;
+}
+
+.purchase_detail_page .goback_btn i {
+    position:relative;
+    top:4px;
+    font-size:30px;
+    margin-right: 7px;
+}
+
+
+/* 게시물 부분 */
+
+.contents_container{
+    width:1000px;
+    border-collapse: separate;
+    border-spacing: 10px 20px;
+}
+
+.contents_container td{
+    padding:13px 10px;
+    font-size: 17px;
+}
+
+.contents_container .link_container{
+    text-align: end;
+}
+
+.contents_container .contents_title{
+    font-size: var(--title-font-size);
+    height: 90px;
+}
+
+.contents_container .contents_link{
+    background-color: var(--btn-color);
+    color:var(--background-color);
+    padding: 8px 50px;
+}
+
+.contents_container tr:nth-child(2) td{
+    height: 70px;
+    font-size: 16px;
+    text-align: center;
+    background-color: var(--background-color2);
+    color:var(--text-color);
+}
+
+.contents_container .introduce{
+    border:1.5px solid var(--background-color2);
+    color:var(--text-color);
+}
+
+

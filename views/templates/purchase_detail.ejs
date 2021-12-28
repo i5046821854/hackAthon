@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/views/partials/purchase_detail.css">
+    <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
+    <title>공구 게시물</title>
+</head>
+
+<body>
+
+    <!-- header part -->
+    <% var logind = login; %>
+        <%- include('../partials/header', {menu:"signup", login: logind}) %>
+
+
+            <!-- contents part -->
+
+            <div class="purchase_detail_page_container">
+                <div class="purchase_detail_page">
+
+                    <!-- 목록으로 되돌아가기 -->
+                    <a href="/purchase" class="goback_btn"><i class="fas fa-angle-double-left"></i>목록으로</a>
+
+
+                    <!-- 게시물 내용 부분 -->
+                    <table class="contents_container">
+                        <colgroup>
+                            <col style="width:25%">
+                            <col style="width:25%">
+                            <col style="width:25%">
+                            <col style="width:25%">
+                        </colgroup>
+
+                        <tr>
+                            <td colspan="3" class="contents_title">
+                                <%= data.title %>
+                            </td>
+                            <td class="link_container"><a href="#" class="contents_link">참여하기</a></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="mask">
+                                <%= data.prodName %>
+                            </td>
+                            <td class="area">
+                                <%= data.location %>
+                            </td>
+                            <td class="people">
+                                <%= data.cur_number %> /
+                                    <%= data.max_number %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="introduce">
+                                <%= data.description %>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <%- include('../partials/footer') %>
+                <!-- footer -->
+
+
+</body>
+
+</html>

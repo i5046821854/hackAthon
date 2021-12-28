@@ -133,12 +133,55 @@ app.post('/signup', async(req, res) => {
 
 //공구 페이지 (get)
 app.get('/purchase', (req, res) => {
+    var sql = `select * from PURCHASE`
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        console.log(sql);
+        console.log(result)
+        res.render('purchase.ejs', {
+            login: islogin,
+            dataArr: result
+        })
+    })
+})
 
-    res.render('purchase.ejs', {
+//공구 페이지 (get)
+app.get('/purchase_detail', (req, res) => {
+    let sql = `select * from PURCHASE WHERE idx = ${req.query.idx};`
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        console.log(sql);
+        console.log(result)
+        res.render('purchase_detail.ejs', {
+            login: islogin,
+            data: result[0]
+        })
+    })
+})
+
+
+//공구 페이지 (get)
+app.get('/purchase_input', (req, res) => {
+
+    res.render('purchase_input.ejs', {
         login: islogin
     })
 })
 
+//공구 페이지 (post)
+app.post('/purchase_input', (req, res) => {
+    console.log(req.body);
+    var sql = `insert into PURCHASE (userid, title, description, prodName, prodIdx, location, max_number, cur_number, form_link) values ('${req.session.id}', '${req.body.title}', '${req.body.description}', '${req.body.mask}', '${req.body.maskIdx}', '${req.body.area}', ${req.body.people}, 0, '${req.body.link}')`
+
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        console.log(sql)
+        res.redirect('/purchase')
+    })
+})
 
 //마이 페이지 (get)
 app.get('/myPage', auth, (req, res) => {
@@ -280,6 +323,35 @@ app.get('/detail', (req, res) => {
             })
         })
     }
+})
+
+//일반사용자 조회 페이지
+app.get('/purchase_search', (req, res) => {
+    let sql = `select * from MASK`
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        res.render('purchase_search.ejs', {
+            method: 'all',
+            dataArr: result,
+            login: req.session.user
+        })
+    })
+})
+
+//일반사용자 조회 페이지
+app.post('/purchase_search', (req, res) => {
+    const data = req.body
+    let sql = `select * from PURCHASE WHERE 1= 1 AND title LIKE '%${data.search}%'`
+    if (data.area)
+        sql += `AND location = '${data.area}'`
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        console.log(sql);
+        console.log(result);
+        res.send(result);
+    })
 })
 
 
