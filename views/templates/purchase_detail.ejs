@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/views/partials/purchase_detail.css">
     <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
+    <script src="/js/common.js"></script>
     <title>공구 게시물</title>
 </head>
 
@@ -50,7 +51,7 @@
                                         마감된 공구입니다
                                         <% } %>
                             </td>
-                            <td class="link_container"><a href="<%= data.title %>" id="join" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;" class="contents_link">참여하기</a>
+                            <td class="link_container"><a href="<%= data.form_link %>" id="join" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;" class="contents_link">참여하기</a>
                                 <a href="/close?method=close&idx=<%= data.idx %>" class="contents_link" id="close" onclick="return confirm('정말 마감하시겠습니까?');" style="display:none">마감하기</a>
                                 <a href="/close?method=cancel&idx=<%= data.idx %>" class="contents_link" id="closeCnl" onclick="return confirm('정말 마감하시겠습니까?');" style="display:none">마감 취소하기</a></td>
                             <script>

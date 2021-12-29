@@ -63,11 +63,11 @@
                                 <!-- 예시라 나중에 지우면 됨다 -->
                                 <li class="recommended-list" onclick="location.href=`/detail?prod=' + <%= data.idx %> + '`">
                                     <figure>
-                                        <img src="/image/mask.jpg">
+                                        <img src="/image/mask/<%= data.image %>">
                                         <figcaption>
                                             <%= data.prodName %> /
                                                 <%= data.size %> /
-                                                    <%= data.color %>
+                                                    <%= data.kf %>
                                         </figcaption>
                                     </figure>
                                 </li>
@@ -82,11 +82,11 @@
                                     <!-- 예시라 나중에 지우면 됨다 -->
                                     <li class="result-list" onclick="location.href=`/detail?prod=' + <%= data.idx %> + '`">
                                         <figure>
-                                            <img src="/image/mask.jpg">
+                                            <img src="/image/mask/<%= data.image %>">
                                             <figcaption>
                                                 <%= data.brand %> /
                                                     <%= data.size %> /
-                                                        <%= data.color %>
+                                                        <%= data.kf %>
                                             </figcaption>
                                         </figure>
                                     </li>

@@ -20,7 +20,7 @@ function search() {
                 alert("검색 결과가 없어 유사한 마스크가 추천됩니다")
             while (data != result.length) {
                 console.log(data)
-                $('#search').append('<li class="result-list" onclick="location.href=`/detail?prod=' + result[data].idx + '`""> <figure> <img src="/image/mask.jpg"> <figcaption>' + result[data].brand + '/' + result[data].size + '/' + result[data].color + '</figcaption> </figure> </li>');
+                $('#search').append('<li class="result-list" onclick="location.href=`/detail?prod=' + result[data].idx + '`""> <figure> <img src="/image/mask/' + result[data].image + '"> <figcaption>' + result[data].brand + '/' + result[data].size + '/' + result[data].kf + '</figcaption> </figure> </li>');
                 data++;
             }
         },
@@ -41,7 +41,10 @@ function purchase_search() {
             var data = 0
             while (data != result.length) {
                 console.log(data)
-                $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
+                if (result[data].status == 1) {
+                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
+                } else
+                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title finished">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
                 data++;
             }
         },
@@ -50,6 +53,70 @@ function purchase_search() {
         }
     });
 }
+
+function findclosed() {
+    if (document.getElementById("check").checked)
+        find();
+    var data = {};
+    data.area = document.getElementById('area').value
+    data.search = document.getElementById('search').value.trim().replace('-', '')
+    $.ajax({
+        type: "POST",
+        url: "/purchase_search_deactive",
+        data,
+        success: function(result) {
+            $('#purchase').empty()
+            var data = 0
+            while (data != result.length) {
+                console.log(data)
+                if (result[data].status == 1) {
+                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
+                } else
+                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title finished">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
+                data++;
+            }
+        },
+        error: function() {
+            $('#purchase').empty()
+        }
+    });
+}
+
+function find() {
+    var data = {};
+    data.area = document.getElementById('area').value
+    data.search = document.getElementById('search').value.trim().replace('-', '')
+    $.ajax({
+        type: "POST",
+        url: "/purchase_search_active",
+        data,
+        success: function(result) {
+            $('#purchase').empty()
+            var data = 0
+            while (data != result.length) {
+                console.log(data)
+                if (result[data].status == 1) {
+                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
+                } else
+                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title finished">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
+                data++;
+            }
+        },
+        error: function() {
+            $('#purchase').empty()
+        }
+    });
+}
+
+
+function handleclick(element) {
+    if (element.checked) {
+        find();
+    } else {
+        findclosed();
+    }
+}
+
 
 function psearch() {
     var data = {};
@@ -73,7 +140,7 @@ function psearch() {
                 alert("검색 결과가 없어 유사한 마스크가 추천됩니다")
             while (data != result.length) {
                 console.log(data)
-                $('#search').append('<li class="result-list" onclick="window.opener.document.getElementById(`hidden`).value = `' + result[data].idx + '; window.opener.document.getElementById(`mask`).value = `' + result[data].prodName + '`; window.close();"> <figure> <img src="/image/mask.jpg"> <figcaption>' + result[data].brand + '/' + result[data].size + '/' + result[data].color + '</figcaption> </figure> </li>');
+                $('#search').append('<li class="result-list" onclick="window.opener.document.getElementById(`hidden`).value = `' + result[data].idx + '; window.opener.document.getElementById(`mask`).value = `' + result[data].prodName + '`; window.close();"> <figure> <img src="/image/mask/' + result[data].image + '"> <figcaption>' + result[data].brand + '/' + result[data].size + '/' + result[data].kf + '</figcaption> </figure> </li>');
                 data++;
             }
         },

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,30 +9,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/views/partials/login.css">
+    <script src="/js/common.js"></script>
     <title>Login</title>
 </head>
+
 <body>
     <!-- header part -->
     <% var logind = login; %>
         <%- include('../partials/header', {menu:"login", login : logind }) %>
-    <div class="login_body">
-        <h3>로그인</h3>
-        <form method="POST" action="/login">
-            <div class="id_tag">
-                <p>ID : </p>
-                <input class="form-control" type="text" name="id" placeholder="ID">
+            <div class="login_body">
+                <h3>로그인</h3>
+                <form method="POST" action="/login">
+                    <div class="id_tag">
+                        <p>ID : </p>
+                        <input class="form-control" type="text" name="id" placeholder="ID">
+                    </div>
+                    <br>
+                    <div class="Passw">
+                        <p>P/W : </p>
+                        <input class="form-control" type="password" name="pwd" placeholder="PASSWORD">
+                    </div>
+                    <br>
+                    <br>
+                    <button class="login_btn" type="submit">로그인 하기</button>
+                </form>
             </div>
-            <br>
-            <div class="Passw">
-                <p>P/W : </p>
-                <input class="form-control" type="password" name="pwd" placeholder="PASSWORD">
-            </div>
-            <br>
-            <br>
-            <button class="login_btn" type="submit">로그인 하기</button>
-        </form>
-    </div>
-    <%- include('../partials/footer') %>
+            <%- include('../partials/footer') %>
 </body>
 
 </html>

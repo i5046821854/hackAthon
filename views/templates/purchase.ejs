@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/js/search.js"></script>
+    <script src="/js/common.js"></script>
     <title>공구 게시판</title>
 </head>
 
@@ -53,7 +54,9 @@
                         <input type="text" id="search" class="mask_search">
                         <button class="search_btn" onclick="purchase_search()"><i class="fas fa-search"></i></button>
                     </div>
-
+                    <div style="text-align: left;">
+                        <input type="checkbox" id="check" onclick='handleclick(this);'> 진행중인 공구만 보기
+                    </div>
                     <!-- 글목록 부분 -->
                     <ul class="contents_container" id="purchase">
                         <% dataArr.forEach(function(data){ %>
@@ -61,14 +64,15 @@
                                 <!-- 예시 -->
                                 <span class="area"><%=data.location %></span>
                                 <span class="contents">
-                                <span class="contents_title" id="title"><%=data.title %></span>
-                                <script>
-                                    if (<%= data.status %> == 2)
-                                        document.getElementById("title").classList.add("finished")
-                                </script>
-                                <span class="mask"><%=data.prodName %></span>
-                                </span>
-                                <span class="people"><%=data.max_number %>명</span>
+                                <span class="contents_title" id="<%=data.idx %>"><%=data.title %></span>
+                                <% if( data.status == 2) { %>
+                                    <script>
+                                        document.getElementById("<%=data.idx %>").classList.add("finished")
+                                    </script>
+                                    <% } %>
+                                        <span class="mask"><%=data.prodName %></span>
+                                        </span>
+                                        <span class="people"><%=data.max_number %>명</span>
                             </li>
                             <% }) %>
                     </ul>

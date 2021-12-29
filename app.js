@@ -84,10 +84,7 @@ const authAdmin = function(req, res, next) {
 
 //인덱스 페이지
 app.get('', (req, res) => {
-    if (req.session.user) //로그인 여부에 따라 페이지 로드
-        res.redirect("/search")
-    else
-        res.redirect("/main")
+    res.redirect("/main")
 })
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -305,9 +302,9 @@ app.post('/login', async(req, res) => {
         req.session.user = result
         res.cookie('cnt', 0)
         if (result.authority <= 3) { //권한에 따라 페이지 로드
-            res.redirect("/search")
+            res.redirect("/")
         } else {
-            res.redirect('/search')
+            res.redirect('/')
         }
     } else { //로그인 횟수 저장 (TBD)
         if (!req.cookies.cnt) {
@@ -389,6 +386,35 @@ app.post('/purchase_search', (req, res) => {
     })
 })
 
+//일반사용자 조회 페이지
+app.post('/purchase_search_active', (req, res) => {
+    const data = req.body
+    let sql = `select * from PURCHASE WHERE 1= 1 AND title LIKE '%${data.search}%' AND status = 1 `
+    if (data.area)
+        sql += `AND location = '${data.area}'`
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        console.log(sql);
+        console.log(result);
+        res.send(result);
+    })
+})
+
+//일반사용자 조회 페이지
+app.post('/purchase_search_deactive', (req, res) => {
+    const data = req.body
+    let sql = `select * from PURCHASE WHERE 1= 1 AND title LIKE '%${data.search}%' AND status = 2 `
+    if (data.area)
+        sql += `AND location = '${data.area}'`
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        console.log(sql);
+        console.log(result);
+        res.send(result);
+    })
+})
 
 //일반사용자 조회 페이지
 app.get('/search', (req, res) => {
