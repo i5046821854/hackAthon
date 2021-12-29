@@ -61,10 +61,14 @@
                                 <ul>
                                     <!-- 예시라 나중에 지우면 됨다 -->
                                     <!-- 보이는 건 4개까지만, 그 이상은 더보기로 연결 -->
-                                    <li><a href="#" class="group-buy-post">미마마스크/대형/검정색/경기도</a></li>
-                                    <li><a href="#" class="group-buy-post">아에르/대형/보라색/경기도</a></li>
-                                    <li><a href="#" class="group-buy-post">미마마스크/대형/검정색/경기도</a></li>
-                                    <li><a href="#" class="group-buy-post">아에르/대형/보라색/경기도</a></li>
+                                    <% purchase.forEach(function(data){ %>
+                                        <li>
+                                            <a href="/purchase_detail?idx='<%= data.idx %>'" class="group-buy-post">
+                                                <%= data.title %> /
+                                                    <%= data.prodName %>
+                                            </a>
+                                        </li>
+                                        <% }) %>
                                 </ul>
                             </li>
                             <li class="review">

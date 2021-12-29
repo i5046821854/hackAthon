@@ -40,21 +40,44 @@
                         </colgroup>
 
                         <tr>
-                            <td colspan="3" class="contents_title">
+                            <td colspan="2" class="contents_title">
                                 <%= data.title %>
                             </td>
-                            <td class="link_container"><a href="#" class="contents_link">참여하기</a></td>
+                            <td class="status">
+                                <% if (data.status == 1) { %>
+                                    진행중인 공구입니다
+                                    <% } else { %>
+                                        마감된 공구입니다
+                                        <% } %>
+                            </td>
+                            <td class="link_container"><a href="<%= data.title %>" id="join" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;" class="contents_link">참여하기</a>
+                                <a href="/close?method=close&idx=<%= data.idx %>" class="contents_link" id="close" onclick="return confirm('정말 마감하시겠습니까?');" style="display:none">마감하기</a>
+                                <a href="/close?method=cancel&idx=<%= data.idx %>" class="contents_link" id="closeCnl" onclick="return confirm('정말 마감하시겠습니까?');" style="display:none">마감 취소하기</a></td>
+                            <script>
+                                if (<%= login %>) {
+                                    if ("<%= data.userid %>" == "<%= user %>") {
+                                        document.getElementById('join').style.display = 'none';
+                                        if (<%= data.status %> == 1) {
+                                            document.getElementById('close').style.display = 'inline-block';
+                                        } else {
+                                            document.getElementById('closeCnl').style.display = 'inline-block';
+                                        }
+                                    }
+                                }
+                            </script>
                         </tr>
                         <tr>
                             <td colspan="2" class="mask">
+                                제품명 :
                                 <%= data.prodName %>
                             </td>
                             <td class="area">
+                                공구 지역 :
                                 <%= data.location %>
                             </td>
                             <td class="people">
-                                <%= data.cur_number %> /
-                                    <%= data.max_number %>
+                                공구 인원 :
+                                <%= data.max_number %>
                             </td>
                         </tr>
                         <tr>

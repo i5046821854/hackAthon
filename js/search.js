@@ -41,7 +41,7 @@ function purchase_search() {
             var data = 0
             while (data != result.length) {
                 console.log(data)
-                $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area"><' + result[data].location + '</span><span class="contents"><span class="contents_title">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].cur_number + '/' + result[data].max_number + '</span></li>');
+                $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
                 data++;
             }
         },

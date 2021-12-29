@@ -1,128 +1,152 @@
 :root {
-    --text-color:#50514F;
-    --title-color:#080403;
-
-    --background-color:#FAF9F7;
+    --text-color: #50514F;
+    --title-color: #080403;
+    --background-color: #FAF9F7;
     --background-color2: #EDE4DE;
-
-    --btn-color:#B29471;
-    --main-color:#DED0C1;
-    
-    --contents-padding:40px;
-   
-    --title-font-size:33px;
+    --btn-color: #B29471;
+    --main-color: #DED0C1;
+    --contents-padding: 40px;
+    --title-font-size: 33px;
 }
 
-*{
-    padding:0;
-    margin:0;
+* {
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
 }
 
-body{
-    margin:0;
+body {
+    margin: 0;
     font-family: 'Gowun Dodum', sans-serif;
     background-color: var(--background-color);
 }
 
-.purchase_page_container{
-    width:100%;
-    padding:100px 0px;
+.purchase_page_container {
+    width: 100%;
+    padding: 100px 0px;
     background-color: var(--background-color);
 }
 
-.purchase_page{
-    width:100%;
-    padding:var(--contents-padding);
+.purchase_page {
+    width: 100%;
+    padding: var(--contents-padding);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.purchase_page .page_title{
+.purchase_page .page_title {
     font-size: var(--title-font-size);
     margin-bottom: 30px;
 }
 
-.seach_container{
-    width:400px;
+.seach_container {
+    width: 400px;
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
 }
 
-.seach_container select{
-    width:65px;
+.seach_container select {
+    width: 65px;
     border-radius: 35px;
-    border:1px solid var(--background-color2);
+    border: 1px solid var(--background-color2);
     font-family: 'Gowun Dodum', sans-serif;
-    color:var(--text-color);
-    outline:none;
-    padding:3px;
+    color: var(--text-color);
+    outline: none;
+    padding: 3px;
 }
 
 .seach_container input {
-    width:290px;
+    width: 290px;
     height: 33px;
-    border:2px solid var(--background-color2);
+    border: 2px solid var(--background-color2);
     background-color: var(--background-color2);
     border-radius: 35px;
-    padding:2px 10px;
-    color:var(--text-color);
+    padding: 2px 10px;
+    color: var(--text-color);
 }
 
 .seach_container input:focus {
-    outline:none;
+    outline: none;
 }
 
 .seach_container .search_btn {
-    outline:none;
-    border:none;
+    outline: none;
+    border: none;
     cursor: pointer;
-    padding:7px 11px;
+    padding: 7px 11px;
     background-color: var(--btn-color);
-    color:var(--background-color);
+    color: var(--background-color);
     border-radius: 50%;
 }
 
-.contents_container{
-    width:900px;
-    padding:5px 5px 40px 5px;
+.contents_container {
+    width: 900px;
+    padding: 5px 5px 40px 5px;
     border-top: 2px solid var(--background-color2);
     border-bottom: 2px solid var(--background-color2);
     margin-bottom: 50px;
 }
 
-.contents_container li{
-    padding:5px 20px;
+.contents_container li {
+    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 15px;
-    margin-bottom: 10px;
     border-bottom: 1px solid var(--background-color2);
-    /* background-color: var(--background-color2); */
 }
 
-.contents_container li .contents{
+.contents_container li .contents {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     color: var(--text-color);
 }
 
-.contents_container li .contents .contents_title{
+.contents_container li .contents .contents_title {
     font-size: 18px;
     color: var(--title-color);
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .btn_container {
     align-self: center;
-    padding:20px;
+    padding: 20px;
 }
 
-.btn_container .write_btn{
-    padding:5px 40px;
-    color:var(--background-color);
+.btn_container .write_btn {
+    padding: 5px 40px;
+    color: var(--background-color);
     background-color: var(--btn-color);
+    text-decoration: none;
+}
+
+
+/* 진행중 표시 */
+
+.contents_container li .contents .contents_title::after {
+    content: "진행중";
+    font-size: 12px;
+    background-color: var(--btn-color);
+    color: var(--background-color);
+    padding: 1px 4px;
+    margin-left: 10px;
+}
+
+
+/* .finished 추가 -> 마감 표시 */
+
+.contents_container li .contents .contents_title.finished::after {
+    content: "마감";
+    font-size: 12px;
+    background-color: var(--text-color);
+    color: var(--background-color);
+    padding: 1px 4px;
+    margin-left: 10px;
 }

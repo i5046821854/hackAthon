@@ -154,16 +154,46 @@ app.get('/purchase_detail', (req, res) => {
             console.log(err);
         console.log(sql);
         console.log(result)
+        var user = '';
+        if (req.session.user)
+            user = req.session.user.id
         res.render('purchase_detail.ejs', {
+            user,
             login: islogin,
             data: result[0]
         })
     })
 })
 
+//공구 페이지 (get)
+app.get('/close', (req, res) => {
+    var sql = ''
+    if (req.query.method == 'close')
+        sql = `update PURCHASE set status = 2 WHERE idx = ${req.query.idx};`
+    else
+        sql = `update PURCHASE set status = 1 WHERE idx = ${req.query.idx};`
+    let sql2 = `select * from PURCHASE WHERE idx = ${req.query.idx};`
+    db.query(sql + sql2, async(err, result) => {
+        if (err)
+            console.log(err);
+        console.log(sql);
+        console.log(result[0])
+        console.log(result[1][0])
+        var user = '';
+        if (req.session.user)
+            user = req.session.user.id
+        console.log(user)
+        res.render('purchase_detail.ejs', {
+            user,
+            login: islogin,
+            data: result[1][0]
+        })
+    })
+})
+
 
 //공구 페이지 (get)
-app.get('/purchase_input', (req, res) => {
+app.get('/purchase_input', auth, (req, res) => {
 
     res.render('purchase_input.ejs', {
         login: islogin
@@ -173,7 +203,7 @@ app.get('/purchase_input', (req, res) => {
 //공구 페이지 (post)
 app.post('/purchase_input', (req, res) => {
     console.log(req.body);
-    var sql = `insert into PURCHASE (userid, title, description, prodName, prodIdx, location, max_number, cur_number, form_link) values ('${req.session.id}', '${req.body.title}', '${req.body.description}', '${req.body.mask}', '${req.body.maskIdx}', '${req.body.area}', ${req.body.people}, 0, '${req.body.link}')`
+    var sql = `insert into PURCHASE (userid, title, description, prodName, prodIdx, location, max_number, form_link) values ('${req.session.user.id}', '${req.body.title}', '${req.body.description}', '${req.body.mask}', '${req.body.maskIdx}', '${req.body.area}', ${req.body.people}, '${req.body.link}')`
 
     db.query(sql, async(err, result) => {
         if (err)
@@ -186,12 +216,17 @@ app.post('/purchase_input', (req, res) => {
 //마이 페이지 (get)
 app.get('/myPage', auth, (req, res) => {
 
-    let sql = `select b.* from CART as a inner join MASK as b ON a.prodIdx = b.idx WHERE id = '${req.session.user.id}'`
-    db.query(sql, async(err, result) => {
+    let sql = `select b.* from CART as a inner join MASK as b ON a.prodIdx = b.idx WHERE id = '${req.session.user.id}';`
+    let sq12 = `select a.idx, a.title, a.prodName from PURCHASE a inner join MASK b on a.prodIdx = b.idx    where userid = '${req.session.user.id}'`;
+    db.query(sql + sq12, async(err, result) => {
         if (err)
             console.log(err);
+        console.log(result[0]);
+
+        console.log(result[1]);
         res.render('myPage.ejs', {
-            dataArr: result,
+            dataArr: result[0],
+            purchase: result[1],
             login: req.session.user,
             user: req.session.user
         })
