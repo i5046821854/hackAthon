@@ -54,33 +54,6 @@ function purchase_search() {
     });
 }
 
-function findclosed() {
-    if (document.getElementById("check").checked)
-        find();
-    var data = {};
-    data.area = document.getElementById('area').value
-    data.search = document.getElementById('search').value.trim().replace('-', '')
-    $.ajax({
-        type: "POST",
-        url: "/purchase_search_deactive",
-        data,
-        success: function(result) {
-            $('#purchase').empty()
-            var data = 0
-            while (data != result.length) {
-                console.log(data)
-                if (result[data].status == 1) {
-                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
-                } else
-                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title finished">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
-                data++;
-            }
-        },
-        error: function() {
-            $('#purchase').empty()
-        }
-    });
-}
 
 function find() {
     var data = {};
@@ -113,7 +86,7 @@ function handleclick(element) {
     if (element.checked) {
         find();
     } else {
-        findclosed();
+        purchase_search();
     }
 }
 

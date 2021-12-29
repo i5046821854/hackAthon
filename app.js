@@ -402,21 +402,6 @@ app.post('/purchase_search_active', (req, res) => {
 })
 
 //일반사용자 조회 페이지
-app.post('/purchase_search_deactive', (req, res) => {
-    const data = req.body
-    let sql = `select * from PURCHASE WHERE 1= 1 AND title LIKE '%${data.search}%' AND status = 2 `
-    if (data.area)
-        sql += `AND location = '${data.area}'`
-    db.query(sql, async(err, result) => {
-        if (err)
-            console.log(err);
-        console.log(sql);
-        console.log(result);
-        res.send(result);
-    })
-})
-
-//일반사용자 조회 페이지
 app.get('/search', (req, res) => {
     let sql = `select * from MASK`
     db.query(sql, async(err, result) => {
