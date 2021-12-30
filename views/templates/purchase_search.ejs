@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
     <link href="/views/partials/search.css" type="text/css" rel="stylesheet">
-    <link href="/views/partials/headerFooter.css" type="text/css" rel="stylesheet">
+    <link href="/views/partials/base.css" type="text/css" rel="stylesheet">
     <title>마스크 탐색</title>
     <script src="/js/search.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -20,7 +20,6 @@
     <div class="board">
         <div class="search-area">
             <input type="text" placeholder="마스크 검색" class="search-input" onKeyDown="pressEnter()" id="text"></input>
-            <!-- <img src = "search-solid.svg" style="width: 30px; height: 30px;" class="search-button"></img> -->
             <button type="button" class="search-button" id="submit" onclick="psearch()"> 검색 </button>
         </div>
         <div class="search-filter">
@@ -60,7 +59,7 @@
                     <!-- 예시라 나중에 지우면 됨다 -->
                     <li class="result-list" onclick="window.opener.document.getElementById(`hidden`).value = '<%= data.idx %>'; window.opener.document.getElementById('mask').value = '<%= data.prodName %>'; window.close();">
                         <figure>
-                            <img src="/image/mask.jpg">
+                            <img src="/image/mask/<%= data.image %>">
                             <figcaption>
                                 <%= data.brand %> /
                                     <%= data.size %> /
@@ -71,14 +70,8 @@
                     <% }) %>
             </ul>
         </div>
-        <div class="footer">
-            <div class="logo">LOGO</div>
-            <div class="copyright">
-                COPYRIGHT ⓒ 2021 LIKELION SUNGKYUNKWAN UNIV. ALL RIGHTS RESERVED. <br> CONTACT. e-mail : wisdom2889@g.skku.edu
-            </div>
-        </div>
-    </div>
 
+    </div>
 </body>
 
 </html>

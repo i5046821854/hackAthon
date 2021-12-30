@@ -8,20 +8,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-    <link href="/views/partials/error.css" type="text/css" rel="stylesheet">
-    <link href="/views/partials/base.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
+    <link rel="stylesheet" type="text/css" href="/views/partials/error.css">
     <script src="/js/common.js"></script>
     <title> ERROR </title>
 </head>
 
 <body>
-    <% var logind = login; %>
-        <%- include('../partials/header', {menu:"error", login : logind }) %>
-            <div class="error">
-                <h1> 오류가 발생했어요! </h1>
-                <button class="home" onclick="location.href='/'"> 홈으로 돌아가기 </button>
-            </div>
-            <%- include('../partials/footer') %>
+    <div class="error">
+        <img src="/image/undraw_online_test_gba7.png">
+        <div class="comment">
+            <h1> 오류가 발생했어요! </h1>
+            <br> 아래 버튼을 눌러 홈으로 돌아가세요.
+            <br>
+            <a href="/main"><button class="home"> 홈으로 돌아가기 </button> </a>
+        </div>
+    </div>
 </body>
 
 </html>

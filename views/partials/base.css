@@ -1,3 +1,30 @@
+html {
+    background-color: var(--background-color);
+    min-height: 100%;
+}
+
+body {
+    min-height: 100%;
+}
+
+:root {
+    --text-color: #50514F;
+    --title-color: #080403;
+    --background-color: #FAF9F7;
+    --background-color2: #EDE4DE;
+    --point-color: #DED0C1;
+    --logo-font-size: 55px;
+    --mini-font-size: 14px;
+    --nav-font-size: 20px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
 .link {
     font-size: 1.3em;
     font-weight: bold;
@@ -28,23 +55,6 @@
 
 /* header */
 
-:root {
-    --text-color: #50514F;
-    --title-color: #080403;
-    --background-color: #FAF9F7;
-    --background-color2: #EDE4DE;
-    --point-color: #DED0C1;
-    --logo-font-size: 55px;
-    --mini-font-size: 14px;
-    --nav-font-size: 20px;
-}
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
 a {
     text-decoration: none;
     color: var(--text-color);
@@ -56,6 +66,7 @@ ul {
 }
 
 .navContainer {
+    top: 0%;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -92,7 +103,7 @@ ul {
     color: var(--text-color);
 }
 
-.personalList li:nth-child(3):after {
+.personalList li:last-child:after {
     content: "";
 }
 
@@ -143,4 +154,5 @@ ul {
 
 .footer .copyright {
     font-size: small;
+    min-width: 500px;
 }

@@ -20,7 +20,7 @@ function search() {
                 alert("검색 결과가 없어 유사한 마스크가 추천됩니다")
             while (data != result.length) {
                 console.log(data)
-                $('#search').append('<li class="result-list" onclick="location.href=`/detail?prod=' + result[data].idx + '`""> <figure> <img src="/image/mask/' + result[data].image + '"> <figcaption>' + result[data].brand + '/' + result[data].size + '/' + result[data].kf + '</figcaption> </figure> </li>');
+                $('#search').append('<li class="result-list" onclick="location.href=`/detail?prod=' + result[data].idx + '`""> <figure> <img src="/image/mask/' + result[data].image + '"> <figcaption class="search-name">' + result[data].prodName + '</figcaption> <figcaption class="search-detail">' + result[data].design + ' / ' + result[data].strap + ' / ' + result[data].kf + ' / ' + result[data].size + '</figcaption> </figure> </li>');
                 data++;
             }
         },
@@ -42,9 +42,9 @@ function purchase_search() {
             while (data != result.length) {
                 console.log(data)
                 if (result[data].status == 1) {
-                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
+                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '명</span></li>');
                 } else
-                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title finished">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
+                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title finished">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '명</span></li>');
                 data++;
             }
         },
@@ -69,9 +69,9 @@ function find() {
             while (data != result.length) {
                 console.log(data)
                 if (result[data].status == 1) {
-                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
+                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '명</span></li>');
                 } else
-                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title finished">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '</span></li>');
+                    $('#purchase').append('<li onclick="location.href=`/purchase_detail?idx=' + result[data].idx + '`"><span class="area">' + result[data].location + '</span><span class="contents"><span class="contents_title finished">' + result[data].title + '</span><span class="mask">' + result[data].prodName + '</span></span><span class="people">' + result[data].max_number + '명</span></li>');
                 data++;
             }
         },

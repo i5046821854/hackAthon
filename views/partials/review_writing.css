@@ -1,0 +1,118 @@
+/* main */
+.review-writing-container {
+    padding: 120px 120px 0px 120px;
+}
+
+.review-writing-container p {
+    margin: 10px 0px;
+}
+
+.review-form {
+    margin-top: 30px;
+    border: 1px solid var(--text-color);
+    border-radius: 10px;
+    padding: 50px;
+    font-family: 'Gowun Dodum', sans-serif;
+    background-color: var(--background-color2);
+}
+
+.container1 input {
+    padding: 10px;
+    width: 50%;
+    height: 20px;
+    font-family: 'Gowun Dodum', sans-serif;
+    background-color: var(--background-color);
+    border: 1px solid var(--text-color);
+}
+
+.favor {
+    background-color: var(--background-color2);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+#your-review {
+    height: 100px;
+}
+
+textarea {
+    width:100%;
+    background-color: var(--background-color);
+    border: 1px solid var(--text-color);
+}
+
+/* 사진넣기 */
+#preview-image {
+    height: 300px;
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--background-color);
+}
+
+/* 마스크 종류 */
+.review-filter {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    font-size:var(--mini-font-size) ;
+    margin: 10px 0px 10px 0px;
+}
+
+.review-filter label {
+    margin-right: 10px;
+}
+
+#mask-strap, #KF-level, #mask-size, #mask-design{
+    background-color: var(--background-color);
+    border: 1px solid var(--text-color);
+    border-radius: 10px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.4em 1em;
+    margin-right: 30px;
+    margin-bottom: 10px;
+
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+-webkit-appearance: none;
+-moz-appearance: none;
+
+background-image:
+linear-gradient(45deg, transparent 50%, gray 50%),
+linear-gradient(135deg, gray 50%, transparent 50%),
+radial-gradient(var(--point-color) 70%, transparent 72%);
+background-position:
+calc(100% - 20px) calc(1em + 2px),
+calc(100% - 15px) calc(1em + 2px),
+calc(100% - .5em) .5em;
+background-size:
+5px 5px,
+5px 5px,
+1.5em 1.5em;
+background-repeat: no-repeat;
+}
+
+.upload-review {
+    border-radius: 10px;
+    padding: 10px 30px;
+    margin: 50px 150px 50px 50px;
+    float: right;
+    border: 1px solid var(--text-color);
+    background: var(--background-color2);
+    cursor: pointer;    
+}
+
+.upload-review:hover {
+    background: var(--point-color);
+    transition: background 0.5s ease-in-out;
+}
+
+.container1 {
+    margin-bottom: 20px;
+}

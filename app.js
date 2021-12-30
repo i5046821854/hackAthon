@@ -14,7 +14,7 @@ const data = fs.readFileSync('./database.json')
 const conf = JSON.parse(data)
 const path = require('path')
 const aws = require('aws-sdk');
-const { CloudFront } = require('aws-sdk');
+const { CloudFront, ApplicationCostProfiler } = require('aws-sdk');
 const { networkInterfaces } = require('os');
 const s3 = new aws.S3()
 
@@ -95,6 +95,12 @@ app.get('/main', (req, res) => {
     })
 })
 
+//에러 페이지(get)
+app.get('/error', (req, res) => {
+    res.render('error.ejs', {
+        login: islogin
+    })
+})
 
 //회원가입 페이지 (get)
 app.get('/signup', (req, res) => {
@@ -103,111 +109,23 @@ app.get('/signup', (req, res) => {
     })
 })
 
-//회원가입 로직 
-function signup(name, nickname, adr, id, pw) {
-    var sql = `insert into USER (id,prodIdx) values ('${id}', ${pw}, ${name}, ${adr}, ${nickname})`
-
-    db.query(sql, async(err, result) => {
-        if (err)
-            console.log(err);
-        res.send(result)
-    })
-}
-
 //회원가입 페이지 (post)
 app.post('/signup', async(req, res) => {
-    var name = req.body.name;
-    var nickname = req.body.nickname;
-    var adr = req.body.adr;
-    var id = req.body.id;
-    var pw = req.body.pwd;
-    var pwconf = req.body.pwdconf;
-    const result = await signup(name, nickname, adr, id, pw);
+    const data = req.body
+    let sql = `select COUNT(*) from USER where id = "${data.id}" OR nickname = "${data.nickname}"`
+    const result = await db.promise().query(sql)
+    const textRow = JSON.parse(JSON.stringify(result[0]))
 
-    res.redirect('login')
-})
-
-
-//공구 페이지 (get)
-app.get('/purchase', (req, res) => {
-    var sql = `select * from PURCHASE`
-    db.query(sql, async(err, result) => {
-        if (err)
-            console.log(err);
-        console.log(sql);
-        console.log(result)
-        res.render('purchase.ejs', {
-            login: islogin,
-            dataArr: result
+    if (textRow[0]['COUNT(*)'] == 0) {
+        var sql2 = `INSERT INTO USER(id, password, NAME, ADDRESS, nickname, image) values ('${data.id}', '${data.pwd}', '${data.name}', '${data.adr}', '${data.nickname}', '${data.img}')`
+        db.query(sql2, async(err, result) => {
+            if (err)
+                console.log(err);
+            console.log(result);
         })
-    })
-})
-
-//공구 페이지 (get)
-app.get('/purchase_detail', (req, res) => {
-    let sql = `select * from PURCHASE WHERE idx = ${req.query.idx};`
-    db.query(sql, async(err, result) => {
-        if (err)
-            console.log(err);
-        console.log(sql);
-        console.log(result)
-        var user = '';
-        if (req.session.user)
-            user = req.session.user.id
-        res.render('purchase_detail.ejs', {
-            user,
-            login: islogin,
-            data: result[0]
-        })
-    })
-})
-
-//공구 페이지 (get)
-app.get('/close', (req, res) => {
-    var sql = ''
-    if (req.query.method == 'close')
-        sql = `update PURCHASE set status = 2 WHERE idx = ${req.query.idx};`
-    else
-        sql = `update PURCHASE set status = 1 WHERE idx = ${req.query.idx};`
-    let sql2 = `select * from PURCHASE WHERE idx = ${req.query.idx};`
-    db.query(sql + sql2, async(err, result) => {
-        if (err)
-            console.log(err);
-        console.log(sql);
-        console.log(result[0])
-        console.log(result[1][0])
-        var user = '';
-        if (req.session.user)
-            user = req.session.user.id
-        console.log(user)
-        res.render('purchase_detail.ejs', {
-            user,
-            login: islogin,
-            data: result[1][0]
-        })
-    })
-})
-
-
-//공구 페이지 (get)
-app.get('/purchase_input', auth, (req, res) => {
-
-    res.render('purchase_input.ejs', {
-        login: islogin
-    })
-})
-
-//공구 페이지 (post)
-app.post('/purchase_input', (req, res) => {
-    console.log(req.body);
-    var sql = `insert into PURCHASE (userid, title, description, prodName, prodIdx, location, max_number, form_link) values ('${req.session.user.id}', '${req.body.title}', '${req.body.description}', '${req.body.mask}', '${req.body.maskIdx}', '${req.body.area}', ${req.body.people}, '${req.body.link}')`
-
-    db.query(sql, async(err, result) => {
-        if (err)
-            console.log(err);
-        console.log(sql)
-        res.redirect('/purchase')
-    })
+    } else {
+        //
+    }
 })
 
 //마이 페이지 (get)
@@ -218,9 +136,6 @@ app.get('/myPage', auth, (req, res) => {
     db.query(sql + sq12, async(err, result) => {
         if (err)
             console.log(err);
-        console.log(result[0]);
-
-        console.log(result[1]);
         res.render('myPage.ejs', {
             dataArr: result[0],
             purchase: result[1],
@@ -233,32 +148,58 @@ app.get('/myPage', auth, (req, res) => {
 
 //후기 페이지 (get)
 app.get('/review', (req, res) => {
-    let sql = `select * from REVIEW;`
-    let sql2 = `select tag, postid from HASHTAG;`
-    db.query(sql + sql2, async(err, result) => {
+    let sql = `select * from REVIEW`
+    db.query(sql, async(err, result) => {
         if (err)
             console.log(err);
-        console.log(result[0]);
         res.render('review.ejs', {
-            dataArr: result[0],
-            hashtag: result[1],
+            method: 'all',
+            dataArr: result,
             login: islogin
         })
     })
 })
 
-//후기 페이지 (post)
 app.post('/review', (req, res) => {
-    let sql = `insert int REVIEW (id, title, contents, image) values ('${req.body.name}','${req.body.title}', '${req.body.contents}','${req.body.image}' )`
+    const data = req.body
+    let sql = `select * from REVIEW`
+
+    if (Object.keys(data).length != 0) {
+        sql = sql + ' WHERE 1=1 '
+        if (data.strap)
+            sql = sql + `AND strap = '${data.strap}' `;
+        if (data.kf)
+            sql = sql + `AND kf = '${data.kf}'`;
+        if (data.size)
+            sql = sql + `AND size = '${data.size}'`;
+        if (data.shape)
+            sql = sql + `AND shape = '${data.shape}'`;
+    }
     db.query(sql, async(err, result) => {
         if (err)
             console.log(err);
-        res.redirect('/review')
+        res.send(result);
     })
 })
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//후기 작성 페이지(get)
+app.get('/review_writing', (req, res) => {
+    res.render('review_writing.ejs', {
+        login: islogin
+    })
+})
+app.post('/review_writing', async(req, res) => {
+        const data = req.body
+        var sql = `INSERT INTO REVIEW(nickname, title, maskname, contents, strap, kf, size, shape) values ('${req.session.user.nickname}', '${data.title}', '${data.name}', '${data.content}', '${data.strap}', '${data.kf}', '${data.size}', '${data.shape}')`
 
+        db.query(sql, async(err, result) => {
+            if (err)
+                console.log(err);
+            res.send(`<script>window.location.href='/review'<\script>`);
+        })
+
+    })
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //로그인 페이지 (get)
 app.get('/login', (req, res) => {
@@ -266,7 +207,6 @@ app.get('/login', (req, res) => {
         login: islogin
     })
 })
-
 
 //로그인 로직
 const login = async function(id, pw) {
@@ -290,7 +230,6 @@ const login = async function(id, pw) {
         resolve(result2)
     })
 }
-
 
 //로그인 페이지 (post)
 app.post('/login', async(req, res) => {
@@ -325,7 +264,6 @@ app.get('/logout', (req, res) => {
 })
 
 
-
 //상세정보 페이지 (get)
 app.get('/detail', (req, res) => {
     let sql = `select * from MASK WHERE idx = ${req.query.prod};`
@@ -357,7 +295,80 @@ app.get('/detail', (req, res) => {
     }
 })
 
-//일반사용자 조회 페이지
+
+//공구 페이지 (get)
+app.get('/purchase', (req, res) => {
+    var sql = `select * from PURCHASE`
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        res.render('purchase.ejs', {
+            login: islogin,
+            dataArr: result
+        })
+    })
+})
+
+//공구 상세 페이지 (get)
+app.get('/purchase_detail', (req, res) => {
+    let sql = `select * from PURCHASE WHERE idx = ${req.query.idx};`
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        var user = '';
+        if (req.session.user)
+            user = req.session.user.id
+        res.render('purchase_detail.ejs', {
+            user,
+            login: islogin,
+            data: result[0]
+        })
+    })
+})
+
+//공구 마감 버튼 클릭 시
+app.get('/close', (req, res) => {
+    var sql = ''
+    if (req.query.method == 'close')
+        sql = `update PURCHASE set status = 2 WHERE idx = ${req.query.idx};`
+    else
+        sql = `update PURCHASE set status = 1 WHERE idx = ${req.query.idx};`
+    let sql2 = `select * from PURCHASE WHERE idx = ${req.query.idx};`
+    db.query(sql + sql2, async(err, result) => {
+        if (err)
+            console.log(err);
+        var user = '';
+        if (req.session.user)
+            user = req.session.user.id
+        res.render('purchase_detail.ejs', {
+            user,
+            login: islogin,
+            data: result[1][0]
+        })
+    })
+})
+
+
+//공구 입력 페이지 (get)
+app.get('/purchase_input', auth, (req, res) => {
+
+    res.render('purchase_input.ejs', {
+        login: islogin
+    })
+})
+
+//공구 입력 페이지 (post)
+app.post('/purchase_input', (req, res) => {
+    var sql = `insert into PURCHASE (userid, title, description, prodName, prodIdx, location, max_number, form_link) values ('${req.session.user.id}', '${req.body.title}', '${req.body.description}', '${req.body.mask}', '${req.body.maskIdx}', '${req.body.area}', ${req.body.people}, '${req.body.link}')`;
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        res.redirect('/purchase')
+    })
+})
+
+
+//공구 입력 시 마스크 검색 페이지
 app.get('/purchase_search', (req, res) => {
     let sql = `select * from MASK`
     db.query(sql, async(err, result) => {
@@ -371,7 +382,7 @@ app.get('/purchase_search', (req, res) => {
     })
 })
 
-//일반사용자 조회 페이지
+//공구 입력 시 마스크 검색 페이지 (post)
 app.post('/purchase_search', (req, res) => {
     const data = req.body
     let sql = `select * from PURCHASE WHERE 1= 1 AND title LIKE '%${data.search}%'`
@@ -380,13 +391,12 @@ app.post('/purchase_search', (req, res) => {
     db.query(sql, async(err, result) => {
         if (err)
             console.log(err);
-        console.log(sql);
-        console.log(result);
         res.send(result);
     })
 })
 
-//일반사용자 조회 페이지
+
+//진행중인 공구만 보기 클릭 시
 app.post('/purchase_search_active', (req, res) => {
     const data = req.body
     let sql = `select * from PURCHASE WHERE 1= 1 AND title LIKE '%${data.search}%' AND status = 1 `
@@ -395,8 +405,6 @@ app.post('/purchase_search_active', (req, res) => {
     db.query(sql, async(err, result) => {
         if (err)
             console.log(err);
-        console.log(sql);
-        console.log(result);
         res.send(result);
     })
 })
@@ -418,7 +426,7 @@ app.get('/search', (req, res) => {
 //일반사용자 조회 페이지
 app.get('/search/recommend', auth, (req, res) => {
     let sql1 = `select * from MASK;`
-    let sql2 = `select ((select if(a.strap = b.strap,b.strapnum,0)) + (select if(a.design = b.shape,b.shapenum,0)) + (select if(a.kf = b.kf,b.kfnum,0)) + (select if(a.size = b.size,b.sizenum,0))) as close, a.* from MASK as a, USER as b WHERE a.strap = b.strap OR a.design = b.shape OR a.kf = b.kf OR a.size = b.size AND b.id = '${req.session.user.id}' ORDER BY close DESC;`
+    let sql2 = `select ((select if(a.strap = b.strap,b.strapnum,0)) + (select if(a.design = b.shape,b.shapenum,0)) + (select if(a.kf = b.kf,b.kfnum,0)) + (select if(a.size = b.size,b.sizenum,0))) as close, a.* from MASK as a, USER as b WHERE a.strap = b.strap OR a.design = b.shape OR a.kf = b.kf OR a.size = b.size AND b.id = '${req.session.user.id}' ORDER BY close DESC limit 15;`
     db.query(sql1 + sql2, async(err, result) => {
         if (err)
             console.log(err);
@@ -451,8 +459,7 @@ app.post('/search', (req, res) => {
         if (err)
             console.log(err);
         if (result.length == 0 && islogin) {
-            sql = `select ((select if(a.strap = '${data.strap}',b.strapnum,0)) + (select if(a.design = '${data.design}',b.shapenum,0)) + (select if(a.kf = '${data.filter}',b.kfnum,0)) + (select if(a.size = '${data.size}',b.sizenum,0))) as close, a.* from MASK as a, USER as b WHERE (a.strap = '${data.strap}' OR a.design = '${data.design}' OR a.kf = '${data.filter}' OR a.size = '${data.size}') AND b.id = '${req.session.user.id}' ORDER BY close DESC;`
-            console.log(sql)
+            sql = `select ((select if(a.strap = '${data.strap}',b.strapnum,0)) + (select if(a.design = '${data.design}',b.shapenum,0)) + (select if(a.kf = '${data.filter}',b.kfnum,0)) + (select if(a.size = '${data.size}',b.sizenum,0))) as close, a.* from MASK as a, USER as b WHERE a.strap = '${data.strap}' OR a.design = '${data.design}' OR a.kf = '${data.filter}' OR a.size = '${data.size}' AND b.id = '${req.session.user.id}' ORDER BY close DESC;`
             db.query(sql, async(err, result) => {
                 if (err)
                     console.log(err);
@@ -461,7 +468,6 @@ app.post('/search', (req, res) => {
             })
         } else if (result.length == 0 && !islogin) {
             sql = `select ((select if(a.strap = '${data.strap}',1,0)) + (select if(a.design = '${data.design}',1,0)) + (select if(a.kf = '${data.filter}',1,0)) + (select if(a.size = '${data.size}',1,0))) as close, a.* from MASK as a WHERE a.strap = '${data.strap}' OR a.design = '${data.design}' OR a.kf = '${data.filter}' OR a.size = '${data.size}'  ORDER BY close DESC;`
-            console.log(sql)
             db.query(sql, async(err, result) => {
                 if (err)
                     console.log(err);
@@ -476,7 +482,7 @@ app.post('/search', (req, res) => {
 })
 
 
-
+//찜하기 클릭 시
 app.post('/check', (req, res) => {
     const idx = Number(req.body.idx)
     if (req.body.checked == '1')
@@ -543,6 +549,7 @@ app.get('*', (req, res) => {
         login: req.session.user
     })
 })
+
 app.listen(3000, () => {
     console.log("server is on " + PORT)
 })

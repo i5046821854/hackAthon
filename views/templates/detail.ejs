@@ -13,72 +13,89 @@
     <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
     <link rel="stylesheet" type="text/css" href="/views/partials/detail.css">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-
+    <script src="/js/common.js"></script>
 </head>
 
 <body>
     <% var logind = login; %>
         <%- include('../partials/header', {menu:"detail", login: logind}) %>
 
-        <!-- contents part -->
-    <div class="detail_page_container">
-        <div class="detail_page">
-            <!-- 제품 사진 부분 -->
-            <div class="img_container">
-                <img src="/image/mask/<%= data.image %>" alt="mask_img">
-            </div>
-            <!-- 제품 설명 부분 -->
-            <div class="mask_info_container">
-                <table class="infoT">
-                    <tr>
-                        <th colspan="2"><%= data.prodName %></th> <!--제품명-->
-                    </tr>
-                    <tr>
-                        <td>규격</td>
-                        <td><%= data.spec %></td>
-                    </tr>
-                    <tr>
-                        <td>디자인</td>
-                        <td><%= data.design %></td>
-                    </tr>
-                    <tr>
-                        <td>마스크 끈</td>
-                        <td><%= data.strap %></td>
-                    </tr>
-                    <tr>
-                        <td>필터</td>
-                        <td><%= data.kf %></td>
-                    </tr>
-                    <tr>
-                        <td>사이즈</td>
-                        <td><%= data.size %></td>
-                    </tr>
-                    <tr>
-                        <td>색상</td>
-                        <td><%= data.color %></td>
-                    </tr>
-                    <tr>
-                        <td>브랜드</td>
-                        <td><%= data.brand %></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" id="go2homepage"><a href="<%= data.homepage %>"><i class="fas fa-home"></i>홈페이지 바로가기</a></td>
-                    </tr>
-                </table>
+            <!-- contents part -->
+            <div class="detail_page_container">
+                <div class="detail_page">
+                    <!-- 제품 사진 부분 -->
+                    <div class="img_container">
+                        <img src="/image/mask/<%= data.image %>" alt="mask_img">
+                    </div>
+                    <!-- 제품 설명 부분 -->
+                    <div class="mask_info_container">
+                        <table class="infoT">
+                            <tr>
+                                <th colspan="2">
+                                    <%= data.prodName %>
+                                </th>
+                                <!--제품명-->
+                            </tr>
+                            <tr>
+                                <td>규격</td>
+                                <td>
+                                    <%= data.spec %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>디자인</td>
+                                <td>
+                                    <%= data.design %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>마스크 끈</td>
+                                <td>
+                                    <%= data.strap %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>필터</td>
+                                <td>
+                                    <%= data.kf %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>사이즈</td>
+                                <td>
+                                    <%= data.size %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>색상</td>
+                                <td>
+                                    <%= data.color %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>브랜드</td>
+                                <td>
+                                    <%= data.brand %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" id="go2homepage"><a href="<%= data.homepage %>"><i class="fas fa-home"></i>홈페이지 바로가기</a></td>
+                            </tr>
+                        </table>
 
-                <div class="jjimNreview" id="jjim">
-                    <label for="check" class="switch-button">
+                        <div class="jjimNreview" id="jjim">
+                            <label for="check" class="switch-button">
                         <input type="hidden" id="hidden" value = "<%= data.idx %>"/>
                         <input type="checkbox" id="check"/>
                         <i class="far fa-heart"></i>
                         <i class="fas fa-heart"></i>
                     </label>
 
-                    <span class="review"><a href="#">review</a></span>
+                            <span class="review"><a href="#">review</a></span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 </body>
 <script>
     const submit = document.getElementById('check')

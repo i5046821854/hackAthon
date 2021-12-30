@@ -1,7 +1,25 @@
 .error {
+    width: 100%;
     text-align: center;
-    padding: 275px 110px;
+    padding: 190px 10px;
     font-family: 'Gowun Dodum', sans-serif;
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.error img {
+    flex-grow: 1;
+    width: 200px;
+    position: relative;
+    left: 120px;
+    top: 30px;
+}
+
+.error .comment {
+    text-align: center;
+    flex-grow: 2;
+    position: relative;
+    top: 100px;
 }
 
 .error .home {

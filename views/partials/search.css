@@ -1,25 +1,31 @@
-body{
+body {
     background-color: var(--background-color);
+    height: 100%;
 }
 
+
 /* board main */
+
 .board {
-    padding: 110px;
-    width:100%;
-    height:100%;
+    padding: 110px 0px;
+    width: 100%;
+    height: 100%;
     text-align: center;
+    min-height: calc(100vh - 100px);
 }
 
 .search-area {
     padding: 10px;
 }
 
+
 /* 검색창 */
+
 .search-area .search-input {
-    font-family: 'Gowun Dodum', sans-serif;    
-    width: 60%;
+    font-family: 'Gowun Dodum', sans-serif;
+    width: 50%;
     border-radius: 20px;
-    border: 1px solid #B29471;
+    border: 1.5px solid #B29471;
     margin: 20px 20px;
     padding: 10px;
 }
@@ -28,73 +34,109 @@ body{
     position: relative;
     left: -80px;
     top: 0px;
-    background-color: #FAF9F7;
+    background-color: #FFF;
     border: none;
     cursor: pointer;
-    font-family: 'Gowun Dodum',sans-serif;
+    font-family: 'Gowun Dodum', sans-serif;
+    transition-duration: 0.2s;
 }
 
+.search-area .search-button:active {
+    color: var(--point-color);
+    font-size: smaller;
+    font-weight: bolder;
+}
+
+
 /* 검색 필터 */
+
 .search-filter select {
-    font-family: 'Gowun Dodum',sans-serif;
+    font-family: 'Gowun Dodum', sans-serif;
     padding: 5px;
     border: 1px solid #B29471;
     border-radius: 10px;
 }
 
+
 /* 추천 마스크 */
+
 .recommended {
     margin-top: 20px;
-    padding : 30px;
+    padding: 30px;
     text-align: center;
-    background-color: var(--point-color);
+    background-color: var(--background-color2);
     font-family: "Gowun Dodum", sans-serif;
 }
-.recommended ul{
-    max-width: 90vw;
-    white-space: nowrap; 
-    overflow-x: auto; 
+
+.recommended ul {
+    max-width: 100vw;
+    white-space: nowrap;
+    overflow-x: auto;
     text-align: center;
 }
 
-.recommended ul .recommended-list{
-    display:inline-block; 
-    padding: 10px 20px; 
-    margin-right:10px;
+.recommended ul .recommended-list {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    overflow: hidden;
 }
 
+.recommended ul .recommended-list:hover {
+    transition: all 1s;
+    transform: scale(1.02);
+}
 
-.recommended ul .recommended-list img{
+.recommended ul .recommended-list:hover img {
+    transition: all 1s;
+    box-shadow: 5px 5px 1px var(--point-color);
+}
+
+.recommended ul .recommended-list img {
     width: 150px;
     height: 150px;
 }
 
+.recommended ul .recommended-list .figure {
+    cursor: pointer;
+    padding: 5px;
+    transition-duration: 0.5s;
+}
+
+
 /* 검색 결과 */
+
 .search-result {
     margin-top: 20px;
-    padding : 30px;
+    padding: 30px;
     text-align: center;
     background-color: var(--background-color);
     font-family: "Gowun Dodum", sans-serif;
 }
 
 .search-result h3 {
-    padding-bottom: 20px;
+    padding-bottom: 30px;
 }
-.search-result ul{
-    max-width: 90vw;
-    white-space: wrap; 
-    overflow-x: auto; 
+
+.search-result ul {
+    max-width: 100vw;
+    white-space: wrap;
+    overflow-x: auto;
     text-align: center;
 }
 
-.search-result ul .result-list{
-    display:inline-block; 
-    padding: 10px 20px; 
+.search-result ul .result-list {
+    display: inline-block;
+    padding: 20px 40px;
     margin-right: 10px;
+    margin-bottom: 10px;
+    /* border: 5px solid var(--point-color);
+    border-radius: 20%; */
+    cursor: pointer;
 }
 
-.search-result ul .result-list img{
+.search-result ul .result-list img {
     width: 250px;
     height: 250px;
 }

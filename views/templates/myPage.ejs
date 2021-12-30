@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
     <link rel="stylesheet" type="text/css" href="/views/partials/mypage.css">
     <script src="/js/common.js"></script>
     <title>My Page</title>
@@ -109,65 +110,3 @@
 </body>
 
 </html>
-<!-- <!DOCTYPE html>
-
-<body>
-            <h1 style="text-align: center; margin-top:2%">마이페이지</h1>
-            <h1 style="text-align: center; margin-top:2%">찜한 마스크</h1>
-            <div class="table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>브랜드</th>
-                            <th>상품명</th>
-                            <th>사이즈(규격)</th>
-                            <th>디자인</th>
-                            <th>끈</th>
-                            <th>필터</th>
-                            <th>사이즈(대중소)</th>
-                            <th>색상</th>
-                            <th>홈페이지</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <div class="rows">
-                            <% dataArr.forEach(function(data){ %>
-                                <tr>
-                                    <td>
-                                        <%= data.brand %>
-                                    </td>
-                                    <td onclick="location.href=`/detail?prod=' + <%= data.idx %> + '`">
-                                        <%= data.prodName %>
-                                    </td>
-                                    <td>
-                                        <%= data.spec %>
-                                    </td>
-                                    <td>
-                                        <%= data.design %>
-                                    </td>
-                                    <td>
-                                        <%= data.strap %>
-                                    </td>
-                                    <td>
-                                        <%= data.kf %>
-                                    </td>
-                                    <td>
-                                        <%= data.size %>
-                                    </td>
-                                    <td>
-                                        <%= data.color %>
-                                    </td>
-                                    <td>
-                                        <a href="<%= data.homepage %>">
-                                            <%= data.homepage %>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <% }) %>
-                        </div>
-                    </tbody>
-                </table>
-            </div>
-</body>
-
-</html> -->
