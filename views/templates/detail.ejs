@@ -6,180 +6,84 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>조회</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
-    <style>
-        table,
-        th,
-        td {
-            border: 2px solid darkgray;
-            border-collapse: collapse
-        }
-        
-        tr {
-            height: "30";
-        }
-        
-        table {
-            text-align: center;
-            max-height: 40%;
-            width: 100%
-        }
-        
-        button {
-            display: block;
-            margin: auto;
-            width: 30%;
-            margin-top: 25px;
-            background-color: lightcyan;
-            font-size: larger;
-        }
-        
-        h1 {
-            text-align: center
-        }
-        
-        .category {
-            background-color: lightcyan;
-        }
-        
-        .switch-button {
-            position: relative;
-            display: inline-block;
-            width: 55px;
-            height: 30px;
-        }
-        
-        .switch-button input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .onoff-switch {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            background-color: #ccc;
-            box-shadow: inset 1px 5px 1px #999;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-        
-        .onoff-switch:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 4px;
-            bottom: 4px;
-            background-color: #fff;
-            -webkit-transition: .5s;
-            transition: .4s;
-            border-radius: 20px;
-        }
-        
-        .switch-button input:checked+.onoff-switch {
-            background-color: #F2D522;
-            box-shadow: inset 1px 5px 1px #E3AE56;
-        }
-        
-        .switch-button input:checked+.onoff-switch:before {
-            -webkit-transform: translateX(26px);
-            -ms-transform: translateX(26px);
-            transform: translateX(26px);
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/views/partials/detail.css">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/js/common.js"></script>
+
 </head>
 
 <body>
     <% var logind = login; %>
         <%- include('../partials/header', {menu:"detail", login: logind}) %>
-            <h1 style="margin-top:2%">제품 상세 정보</h1>
-            <div style="text-align: center;">
-                <table>
-                    <colgroup>
-                        <col width: 40%>
-                        <col width: 60%>
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <td>브랜드</td>
-                            <td>
-                                <%= data.brand %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>상품명</td>
-                            <td>
-                                <%= data.prodName %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>사이즈(규격)</td>
-                            <td>
-                                <%= data.spec %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>디자인</td>
-                            <td>
-                                <%= data.design %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>끈</td>
-                            <td>
-                                <%= data.strap %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>필터</td>
-                            <td>
-                                <%= data.kf %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>사이즈(대,중,소)</td>
-                            <td>
-                                <%= data.size %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>색상</td>
-                            <td>
-                                <%= data.color %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>홈페이지</td>
-                            <td>
-                                <a href="<%= data.homepage %>">
-                                    <%= data.homepage %>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
+
+        <!-- contents part -->
+    <div class="detail_page_container">
+        <div class="detail_page">
+            <!-- 제품 사진 부분 -->
+            <div class="img_container">
+                <img src="/image/mask/<%= data.image %>" alt="mask_img">
+            </div>
+            <!-- 제품 설명 부분 -->
+            <div class="mask_info_container">
+                <table class="infoT">
+                    <tr>
+                        <th colspan="2"><%= data.prodName %></th> <!--제품명-->
+                    </tr>
+                    <tr>
+                        <td>규격</td>
+                        <td><%= data.spec %></td>
+                    </tr>
+                    <tr>
+                        <td>디자인</td>
+                        <td><%= data.design %></td>
+                    </tr>
+                    <tr>
+                        <td>마스크 끈</td>
+                        <td><%= data.strap %></td>
+                    </tr>
+                    <tr>
+                        <td>필터</td>
+                        <td><%= data.kf %></td>
+                    </tr>
+                    <tr>
+                        <td>사이즈</td>
+                        <td><%= data.size %></td>
+                    </tr>
+                    <tr>
+                        <td>색상</td>
+                        <td><%= data.color %></td>
+                    </tr>
+                    <tr>
+                        <td>브랜드</td>
+                        <td><%= data.brand %></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="go2homepage"><a href="<%= data.homepage %>"><i class="fas fa-home"></i>홈페이지 바로가기</a></td>
+                    </tr>
                 </table>
-                <div id="switch">
-                    <label class="switch-button">
+
+                <div class="jjimNreview" id="jjim">
+                    <label for="check" class="switch-button">
                         <input type="hidden" id="hidden" value = "<%= data.idx %>"/>
-                        <input type="checkbox" id="check"/> <span class="onoff-switch"></span> 
+                        <input type="checkbox" id="check"/>
+                        <i class="far fa-heart"></i>
+                        <i class="fas fa-heart"></i>
                     </label>
+
+                    <span class="review"><a href="#">review</a></span>
                 </div>
             </div>
-            <h1>해당 상품 공구</h1>
-            <h1>해당 상품 후기</h1>
+        </div>
+    </div>
 </body>
 <script>
     const submit = document.getElementById('check')
     if (!(<%= login %>))
-        document.getElementById('switch').style.display = "none";
+        document.getElementById('jjim').style.display = "none";
     else if ((<%= check %>))
         submit.checked = true;
     var check = "1";
