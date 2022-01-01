@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <script src="/js/review_writing.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
+    <link rel="stylesheet" type="text/css" href="/views/partials/review_writing.css">
+    <title>Review Writing</title>
+</head>
+
+<body>
+    <% var logind = login; %>
+        <%- include('../partials/header', {menu:"review_writing", login : logind }) %>
+            <form method="POST" action="/review_reform">
+                <!-- main -->
+                <div class="review-writing-container">
+                    <h3>후기 쓰기</h3>
+                    <div class="review-form">
+                        <div class='container1'>
+                            <p>제목</p>
+                            <input class="form-control" type="text" id='title' name="title">
+                        </div>
+                        <div class='container1'>
+                            <p>마스크 이름</p>
+                            <input class="form-control" type="text" id='mask' value="<%= prodName %>" name="maskname" placeholder="<%= prodName %>" readonly>
+                            <input class="form-control" type="hidden" id='hidden' name="prodIdx" value="<%= idx %>" readonly>
+                            <script>
+                                function showPopup() {
+                                    window.open("purchase_search", "a", "width=800, height=1200, left=100, top=50");
+                                }
+                            </script>
+                        </div>
+                        <div class="container1">
+                            <p>마스크 종류</p>
+                            <div class="review-filter">
+                                <label>끈</label>
+                                <select id='mask-strap' name="strap">
+                            <option value='동그란 고무줄'>동그란 고무줄</option>
+                            <option value='납작한 고무줄'>납작한 고무줄</option>
+                            <option value='부직포'>부직포</option>
+                            <option value='기타'>기타</option>
+                        </select>
+                                <label>등급</label>
+                                <select id='KF-level' name="kf">
+                            <option value='KF-94'>KF-94</option>
+                            <option value='KF-80'>KF-80</option>
+                            <option value='KF-AD'>KF-AD</option>
+                            <option value='덴탈'>덴탈</option>
+                            <option value='기타'>기타</option>
+                        </select>
+                                <label>사이즈</label>
+                                <select id='mask-size' name="size">
+                            <option value='대형'>대</option>
+                            <option value='중형'>중</option>
+                            <option value='소형'>소</option>
+                        </select>
+                                <label>모양</label>
+                                <select id='mask-design' name="shape">
+                            <option value='일반형'>일반형</option>
+                            <option value='새부리형'>새부리형</option>
+                            <option value='기타'>기타</option>
+                        </select>
+                            </div>
+                        </div>
+
+                        <div class="container1">
+                            <p>후기 내용</p>
+                            <div class="input-group">
+                                <textarea class="form-control" name="contents" aria-label="With textarea" rows="10"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="image-review">
+                            <p>사진</p>
+                            <img id="preview-image" src='https://dummyimage.com/300x300/FAF9F7/50514f.png&text=Preview'>
+                            <br>
+                            <input type="file" onchange="readURL(this);">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="upload-review" onsubmit="return confirm('정말 수정하시겠습니까?');">업로드</button>
+            </form>
+
+            <%- include('../partials/footer') %>
+</body>
+
+</html>

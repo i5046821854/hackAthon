@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,65 +14,77 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <title>Review</title>
 </head>
+
 <body>
     <!-- header part -->
     <% var logind = login; %>
         <%- include('../partials/header', {menu:"review", login : logind }) %>
-    <div class='all-stuff'>
-        <h3>후기 게시판</h3>
-        <% if (login) { %>
-            <button class = "new-review"><a href="/review_writing">후기 쓰기</a> </button>
-        <% } %>
-        <div class = "review-filter">
-                <select id='mask-strap'>
+            <div class='all-stuff'>
+                <h3>후기 게시판</h3>
+                <% if (login) { %>
+                    <button class="new-review"><a href="/review_writing">후기 쓰기</a> </button>
+                    <% } %>
+                        <div class="review-filter">
+                            <select id='mask-strap'>
                     <option selected disabled hidden value="">스트랩 종류</option>
                     <option value='동그란 고무줄'>동그란 고무줄</option>
                     <option value='납작한 고무줄'>납작한 고무줄</option>
                     <option value='부직포'>부직포</option>
                     <option value=''>기타</option>
                 </select>
-                <select id='KF-level'>
+                            <select id='KF-level'>
                     <option selected disabled hidden value="">KF 필터</option>    
                     <option value='KF-94'>KF-94</option>
                     <option value='KF-80'>KF-80</option>
                     <option value='KF-AD'>KF-AD</option>
                     <option value=''>기타</option>
                 </select>
-                <select id='mask-size'>
+                            <select id='mask-size'>
                     <option selected disabled hidden value="">사이즈</option>
-                    <option value='대'>대형</option>
-                    <option value='중'>중형</option>
-                    <option value='소'>소형</option>
+                    <option value='대형'>대형</option>
+                    <option value='중형'>중형</option>
+                    <option value='소형'>소형</option>
                     <option value=''>기타</option>
                 </select>
-                <select id='mask-design'>
+                            <select id='mask-design'>
                     <option selected disabled hidden value="">디자인</option>
                     <option value='일반형'>일반형</option>
                     <option value='새부리형'>새부리형</option>
                     <option value=''>기타</option>
                 </select>
-                <button class='review-btn' onclick="search()"> 검색하기 </button>
-        </div>
+                            <button class='review-btn' onclick="search()"> 검색하기 </button>
+                        </div>
 
-        <div class='review-container'>
-            <% dataArr.forEach(function(data){ %>
-                <div class="review-contents">
-                    <div class='review-image'>
-                        <img src="image/mask.jpeg" width="350" height="300">
-                    </div>
-                    <div class='review-text'>
-                        <p>별명 : <%= data.nickname %> </p>
-                        <p>제목 : <%= data.title %> </p>
-                        <p>내용 : <%= data.contents %> </p>
-                    </div>
-                    <br>
-                    <div class="review-hashtag">
-                        #<%= data.strap %> #<%= data.kf %> #<%= data.size %> #<%= data.shape %>
-                    </div>
-                </div>
-            <% }) %>
-        </div>
-</div>
-    <%- include('../partials/footer') %>
+                        <div class='review-container'>
+                            <% dataArr.forEach(function(data){ %>
+                                <div class="review-contents">
+                                    <div class='review-image'>
+                                        <img src="/image/mask/<%= data.image %>" width="350" height="300">
+                                    </div>
+                                    <div class='review-text'>
+                                        <p>작성자 :
+                                            <%= data.nickname %>
+                                        </p>
+                                        <p>제품명 :
+                                            <%= data.maskname %>
+                                        </p>
+                                        <p>내용 :
+                                            <%= data.contents %>
+                                        </p>
+                                    </div>
+                                    <br>
+                                    <div class="review-hashtag">
+                                        #
+                                        <%= data.strap %> #
+                                            <%= data.kf %> #
+                                                <%= data.size %> #
+                                                    <%= data.shape %>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+            </div>
+            <%- include('../partials/footer') %>
 </body>
+
 </html>

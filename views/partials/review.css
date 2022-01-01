@@ -18,7 +18,7 @@
 
 #mask-strap, #KF-level, #mask-size, #mask-design{
     background-color: var(--background-color);
-    border: 1px solid var(--text-color);
+    border: 1px solid #B29471;
     border-radius: 10px;
     display: inline-block;
     font: inherit;

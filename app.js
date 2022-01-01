@@ -105,6 +105,7 @@ app.get('/error', (req, res) => {
 //회원가입 페이지 (get)
 app.get('/signup', (req, res) => {
     res.render('signup.ejs', {
+        method: 'signup',
         login: islogin
     })
 })
@@ -115,40 +116,50 @@ app.post('/signup', async(req, res) => {
     let sql = `select COUNT(*) from USER where id = "${data.id}" OR nickname = "${data.nickname}"`
     const result = await db.promise().query(sql)
     const textRow = JSON.parse(JSON.stringify(result[0]))
-
     if (textRow[0]['COUNT(*)'] == 0) {
-        var sql2 = `INSERT INTO USER(id, password, NAME, ADDRESS, nickname, image) values ('${data.id}', '${data.pwd}', '${data.name}', '${data.adr}', '${data.nickname}', '${data.img}')`
+        var sql2 = `INSERT INTO USER(id, password, NAME, ADDRESS, nickname, image, kfnum, shapenum, strapnum, sizenum, strap, size, kf, shape) values ('${data.id}', '${data.pwd}', '${data.name}', '${data.adr}', '${data.nickname}', ${data.img},${data.kfnum}, ${data.shapenum}, ${data.strapnum}, ${data.sizenum}, '${data.strap}', '${data.size}', '${data.kf}', '${data.shape}')`;
         db.query(sql2, async(err, result) => {
-            if (err)
+            if (err) {
                 console.log(err);
-            console.log(result);
+                res.send("실패");
+            } else {
+                res.send("성공")
+            }
         })
     } else {
-        //
+        res.send("중복")
     }
 })
 
 //마이 페이지 (get)
 app.get('/myPage', auth, (req, res) => {
 
-    let sql = `select b.* from CART as a inner join MASK as b ON a.prodIdx = b.idx WHERE id = '${req.session.user.id}';`
-    let sq12 = `select a.idx, a.title, a.prodName from PURCHASE a inner join MASK b on a.prodIdx = b.idx    where userid = '${req.session.user.id}'`;
-    db.query(sql + sq12, async(err, result) => {
-        if (err)
-            console.log(err);
-        res.render('myPage.ejs', {
-            dataArr: result[0],
-            purchase: result[1],
-            login: req.session.user,
-            user: req.session.user
+        let sql = `select b.* from CART as a inner join MASK as b ON a.prodIdx = b.idx WHERE id = '${req.session.user.id}';`
+        let sq12 = `select a.idx, a.title, a.prodName from PURCHASE a inner join MASK b on a.prodIdx = b.idx    where userid = '${req.session.user.id}';`;
+        let sql3 = `select * from REVIEW WHERE nickname ='${req.session.user.nickname}'`;
+        db.query(sql + sq12 + sql3, async(err, result) => {
+            if (err)
+                console.log(err);
+            res.render('myPage.ejs', {
+                dataArr: result[0],
+                purchase: result[1],
+                review: result[2],
+                login: req.session.user,
+                user: req.session.user
+            })
         })
-    })
 
-})
+    })
+    //////////////////////////////////
 
 //후기 페이지 (get)
 app.get('/review', (req, res) => {
-    let sql = `select * from REVIEW`
+    var sql = '';
+    if (!!(req.query.prodIdx)) {
+        sql = `select a.*, b.image from REVIEW a inner join MASK b on a.prodIdx = b.idx WHERE a.prodIdx = ${req.query.prodIdx}`
+    } else {
+        sql = `select a.*, b.image from REVIEW a inner join MASK b on a.prodIdx = b.idx`
+    }
     db.query(sql, async(err, result) => {
         if (err)
             console.log(err);
@@ -162,18 +173,17 @@ app.get('/review', (req, res) => {
 
 app.post('/review', (req, res) => {
     const data = req.body
-    let sql = `select * from REVIEW`
-
+    let sql = `select a.*, b.image from REVIEW a inner join MASK b on a.prodidx = b.idx`
     if (Object.keys(data).length != 0) {
         sql = sql + ' WHERE 1=1 '
         if (data.strap)
-            sql = sql + `AND strap = '${data.strap}' `;
+            sql = sql + `AND a.strap = '${data.strap}' `;
         if (data.kf)
-            sql = sql + `AND kf = '${data.kf}'`;
+            sql = sql + `AND a.kf = '${data.kf}'`;
         if (data.size)
-            sql = sql + `AND size = '${data.size}'`;
+            sql = sql + `AND a.size = '${data.size}'`;
         if (data.shape)
-            sql = sql + `AND shape = '${data.shape}'`;
+            sql = sql + `AND a.shape = '${data.shape}'`;
     }
     db.query(sql, async(err, result) => {
         if (err)
@@ -183,23 +193,61 @@ app.post('/review', (req, res) => {
 })
 
 //후기 작성 페이지(get)
-app.get('/review_writing', (req, res) => {
+app.get('/review_writing', auth, (req, res) => {
     res.render('review_writing.ejs', {
         login: islogin
     })
 })
 app.post('/review_writing', async(req, res) => {
-        const data = req.body
-        var sql = `INSERT INTO REVIEW(nickname, title, maskname, contents, strap, kf, size, shape) values ('${req.session.user.nickname}', '${data.title}', '${data.name}', '${data.content}', '${data.strap}', '${data.kf}', '${data.size}', '${data.shape}')`
+    const data = req.body
+    var sql = `INSERT INTO REVIEW(nickname, title, maskname, contents, strap, kf, size, shape, prodIdx) values ('${req.session.user.nickname}', '${data.title}', '${data.name}', '${data.content}', '${data.strap}', '${data.kf}', '${data.size}', '${data.shape}', ${data.hidden})`
 
-        db.query(sql, async(err, result) => {
-            if (err)
-                console.log(err);
-            res.send(`<script>window.location.href='/review'<\script>`);
-        })
-
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        res.send(`<script>window.location.href='/review'<\script>`);
     })
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+})
+
+//후기 수정 페이지(get)
+app.get('/review_reform', (req, res) => {
+    let sql = `select * from MASK where idx = ${req.query.Idx}`;
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        res.render('review_reform.ejs', {
+            prodName: result[0].prodName,
+            idx: req.query.Idx,
+            login: islogin
+        })
+    })
+})
+
+//후기 수정 페이지(post)
+app.post('/review_reform', auth, (req, res) => {
+    console.log(req.body)
+    let sql = `update REVIEW set title = '${req.body.title}', maskname = '${req.body.maskname}',contents = '${req.body.contents}', strap = '${req.body.strap}', kf = '${req.body.kf}', size = '${req.body.size}', shape = '${req.body.shape}' WHERE Idx = ${req.body.prodIdx}`;
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        res.redirect('/review');
+    })
+})
+
+//후기 삭제(get)
+app.post('/review_delete', (req, res) => {
+    const data = req.body;
+    console.log("asd")
+    let sql = `DELETE from REVIEW WHERE idx = '${data.idx}' AND nickname = '${req.session.user.nickname}'`;
+    db.query(sql, async(err, result) => {
+        if (err)
+            console.log(err);
+        res.send(result);
+    })
+})
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //로그인 페이지 (get)
 app.get('/login', (req, res) => {
@@ -409,7 +457,7 @@ app.post('/purchase_search_active', (req, res) => {
     })
 })
 
-//일반사용자 조회 페이지
+//탐색 조회 페이지
 app.get('/search', (req, res) => {
     let sql = `select * from MASK`
     db.query(sql, async(err, result) => {
@@ -423,7 +471,7 @@ app.get('/search', (req, res) => {
     })
 })
 
-//일반사용자 조회 페이지
+//탐색 - 추천 페이지
 app.get('/search/recommend', auth, (req, res) => {
     let sql1 = `select * from MASK;`
     let sql2 = `select ((select if(a.strap = b.strap,b.strapnum,0)) + (select if(a.design = b.shape,b.shapenum,0)) + (select if(a.kf = b.kf,b.kfnum,0)) + (select if(a.size = b.size,b.sizenum,0))) as close, a.* from MASK as a, USER as b WHERE (a.strap = b.strap OR a.design = b.shape OR a.kf = b.kf OR a.size = b.size) AND b.id = '${req.session.user.id}' ORDER BY close DESC limit 15;`
@@ -440,6 +488,7 @@ app.get('/search/recommend', auth, (req, res) => {
 })
 
 
+//탐색 시 검색 (post)
 app.post('/search', (req, res) => {
     const data = req.body
     let sql = `select * from MASK`
@@ -463,8 +512,6 @@ app.post('/search', (req, res) => {
             db.query(sql, async(err, result) => {
                 if (err)
                     console.log(err);
-                console.log(sql);
-                //console.log(result);
                 result.unshift("실패")
                 res.send(result);
             })
@@ -473,8 +520,6 @@ app.post('/search', (req, res) => {
             db.query(sql, async(err, result) => {
                 if (err)
                     console.log(err);
-                console.log(sql);
-                console.log(result);
                 result.unshift("실패")
                 res.send(result);
             })

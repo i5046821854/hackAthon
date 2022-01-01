@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="/views/partials/base.css">
     <link rel="stylesheet" type="text/css" href="/views/partials/mypage.css">
     <script src="/js/common.js"></script>
+    <script src="/js/review.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
     <title>My Page</title>
 </head>
 
@@ -60,8 +62,6 @@
                             <li class="group-buy">
                                 <h4>마스크 공동구매</h4>
                                 <ul>
-                                    <!-- 예시라 나중에 지우면 됨다 -->
-                                    <!-- 보이는 건 4개까지만, 그 이상은 더보기로 연결 -->
                                     <% purchase.forEach(function(data){ %>
                                         <li>
                                             <a href="/purchase_detail?idx='<%= data.idx %>'" class="group-buy-post">
@@ -75,12 +75,12 @@
                             <li class="review">
                                 <h4>마스크 후기</h4>
                                 <ul>
-                                    <!-- 예시라 나중에 지우면 됨다 -->
-                                    <!-- 보이는 건 4개까지만, 그 이상은 더보기로 연결 -->
-                                    <li><a href="#" class="review-post">미마마스크/대형/검정색</a></li>
-                                    <li><a href="#" class="review-post">아에르/대형/보라색</a></li>
-                                    <li><a href="#" class="review-post">미마마스크/대형/검정색</a></li>
-                                    <li><a href="#" class="review-post">아에르/대형/보라색</a></li>
+                                    <% review.forEach(function(data){ %>
+                                        <li class="review-post">
+                                            <%= data.maskname %> :
+                                                <%= data.contents %>...<a href="/review_reform?Idx=<%= data.idx %>">수정</a> <a id="delete" onclick="review_delete(<%= data.idx %>)">삭제</a></li>
+                                        <% }) %>
+
                                 </ul>
                             </li>
                         </ul>
@@ -107,8 +107,6 @@
                 </div>
             </div>
             <%- include('../partials/footer') %>
-
-
 </body>
 
 </html>
