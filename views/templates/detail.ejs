@@ -99,24 +99,25 @@
 </body>
 <script>
     const submit = document.getElementById('check')
-    if (!(<%= login %>))
-        document.getElementById('jjim').style.display = "none";
-    else if ((<%= check %>))
-        submit.checked = true;
+    if ((<%= login %>) && (<%= check %>)) submit.checked = true;
     var check = "1";
     submit.onclick = function() {
-        if (!submit.checked)
-            check = "2";
-        $.ajax({
-            type: "POST",
-            url: "/check",
-            data: {
-                idx: document.getElementById('hidden').value,
-                checked: check
-            },
-            success: function(result) {},
-            error: function() {}
-        });
+        if ((<%= login %>)) {
+            if (!submit.checked)
+                check = "2";
+            $.ajax({
+                type: "POST",
+                url: "/check",
+                data: {
+                    idx: document.getElementById('hidden').value,
+                    checked: check
+                },
+                success: function(result) {
+                    check = "1";
+                },
+                error: function() {}
+            });
+        }
     }
 </script>
 

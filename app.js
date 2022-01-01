@@ -426,7 +426,7 @@ app.get('/search', (req, res) => {
 //일반사용자 조회 페이지
 app.get('/search/recommend', auth, (req, res) => {
     let sql1 = `select * from MASK;`
-    let sql2 = `select ((select if(a.strap = b.strap,b.strapnum,0)) + (select if(a.design = b.shape,b.shapenum,0)) + (select if(a.kf = b.kf,b.kfnum,0)) + (select if(a.size = b.size,b.sizenum,0))) as close, a.* from MASK as a, USER as b WHERE a.strap = b.strap OR a.design = b.shape OR a.kf = b.kf OR a.size = b.size AND b.id = '${req.session.user.id}' ORDER BY close DESC limit 15;`
+    let sql2 = `select ((select if(a.strap = b.strap,b.strapnum,0)) + (select if(a.design = b.shape,b.shapenum,0)) + (select if(a.kf = b.kf,b.kfnum,0)) + (select if(a.size = b.size,b.sizenum,0))) as close, a.* from MASK as a, USER as b WHERE (a.strap = b.strap OR a.design = b.shape OR a.kf = b.kf OR a.size = b.size) AND b.id = '${req.session.user.id}' ORDER BY close DESC limit 15;`
     db.query(sql1 + sql2, async(err, result) => {
         if (err)
             console.log(err);
@@ -459,10 +459,12 @@ app.post('/search', (req, res) => {
         if (err)
             console.log(err);
         if (result.length == 0 && islogin) {
-            sql = `select ((select if(a.strap = '${data.strap}',b.strapnum,0)) + (select if(a.design = '${data.design}',b.shapenum,0)) + (select if(a.kf = '${data.filter}',b.kfnum,0)) + (select if(a.size = '${data.size}',b.sizenum,0))) as close, a.* from MASK as a, USER as b WHERE a.strap = '${data.strap}' OR a.design = '${data.design}' OR a.kf = '${data.filter}' OR a.size = '${data.size}' AND b.id = '${req.session.user.id}' ORDER BY close DESC;`
+            sql = `select ((select if(a.strap = '${data.strap}',b.strapnum,0)) + (select if(a.design = '${data.design}',b.shapenum,0)) + (select if(a.kf = '${data.filter}',b.kfnum,0)) + (select if(a.size = '${data.size}',b.sizenum,0))) as close, a.* from MASK as a, USER as b WHERE (a.strap = '${data.strap}' OR a.design = '${data.design}' OR a.kf = '${data.filter}' OR a.size = '${data.size}') AND b.id = '${req.session.user.id}' ORDER BY close DESC;`
             db.query(sql, async(err, result) => {
                 if (err)
                     console.log(err);
+                console.log(sql);
+                //console.log(result);
                 result.unshift("실패")
                 res.send(result);
             })
@@ -471,6 +473,8 @@ app.post('/search', (req, res) => {
             db.query(sql, async(err, result) => {
                 if (err)
                     console.log(err);
+                console.log(sql);
+                console.log(result);
                 result.unshift("실패")
                 res.send(result);
             })
