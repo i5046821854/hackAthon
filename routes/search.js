@@ -19,7 +19,7 @@ router.get('/search', (req, res) => {
         res.render('search.ejs', {
             method: 'all',
             dataArr: result,
-            login: req.session.user
+            login: (req.session.user ? true : false)
         })
     })
 })
@@ -44,7 +44,7 @@ router.post('/search', (req, res) => {
     db.query(sql, async(err, result) => {
         if (err)
             console.log(err);
-        if (result.length == 0 && islogin) {
+        if (result.length == 0 && (req.session.user)) {
             sql = `select ((select if(a.strap = '${data.strap}',b.strapnum,0)) + (select if(a.design = '${data.design}',b.shapenum,0)) + (select if(a.kf = '${data.filter}',b.kfnum,0)) + (select if(a.size = '${data.size}',b.sizenum,0))) as close, a.* from MASK as a, USER as b WHERE (a.strap = '${data.strap}' OR a.design = '${data.design}' OR a.kf = '${data.filter}' OR a.size = '${data.size}') AND b.id = '${req.session.user.id}' ORDER BY close DESC;`
             db.query(sql, async(err, result) => {
                 if (err)
@@ -52,7 +52,7 @@ router.post('/search', (req, res) => {
                 result.unshift("실패")
                 res.send(result);
             })
-        } else if (result.length == 0 && !islogin) {
+        } else if (result.length == 0 && !(req.session.user)) {
             sql = `select ((select if(a.strap = '${data.strap}',1,0)) + (select if(a.design = '${data.design}',1,0)) + (select if(a.kf = '${data.filter}',1,0)) + (select if(a.size = '${data.size}',1,0))) as close, a.* from MASK as a WHERE a.strap = '${data.strap}' OR a.design = '${data.design}' OR a.kf = '${data.filter}' OR a.size = '${data.size}'  ORDER BY close DESC;`
             db.query(sql, async(err, result) => {
                 if (err)
@@ -71,7 +71,7 @@ router.post('/search', (req, res) => {
 //상세정보 페이지 (get)
 router.get('/detail', (req, res) => {
     let sql = `select * from MASK WHERE idx = ${req.query.prod};`
-    if (islogin) {
+    if (req.session.user) {
         var sql2 = `select COUNT(*) from CART WHERE prodIdx = ${req.query.prod} AND id = '${req.session.user.id}'`
         var checked = true;
         db.query(sql + sql2, async(err, result) => {
@@ -83,7 +83,7 @@ router.get('/detail', (req, res) => {
             res.render('detail.ejs', {
                 data: result[0][0],
                 check: checked,
-                login: islogin
+                login: (req.session.user ? true : false)
             })
         })
     } else {
@@ -93,7 +93,7 @@ router.get('/detail', (req, res) => {
             res.render('detail.ejs', {
                 data: result[0],
                 check: false,
-                login: islogin
+                login: (req.session.user ? true : false)
             })
         })
     }
@@ -111,7 +111,7 @@ router.get('/search/recommend', auth, (req, res) => {
             method: 'recommend',
             dataArr: result[0],
             recommendData: result[1],
-            login: req.session.user
+            login: (req.session.user ? true : false)
         })
     })
 })

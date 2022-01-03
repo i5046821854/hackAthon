@@ -15,7 +15,7 @@ const auth = function(req, res, next) {
 router.get('/signup', (req, res) => {
     res.render('signup.ejs', {
         method: 'signup',
-        login: islogin
+        login: (req.session.user ? true : false)
     })
 })
 
@@ -52,7 +52,7 @@ router.get('/myPage', auth, (req, res) => {
             dataArr: result[0],
             purchase: result[1],
             review: result[2],
-            login: req.session.user,
+            login: (req.session.user ? true : false),
             user: req.session.user
         })
     })
@@ -61,7 +61,7 @@ router.get('/myPage', auth, (req, res) => {
 //로그인 페이지 (get)
 router.get('/login', (req, res) => {
     res.render('login.ejs', {
-        login: islogin
+        login: (req.session.user ? true : false)
     })
 })
 

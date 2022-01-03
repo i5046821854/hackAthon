@@ -18,7 +18,7 @@ router.get('/purchase', (req, res) => {
         if (err)
             console.log(err);
         res.render('purchase.ejs', {
-            login: islogin,
+            login: (req.session.user ? true : false),
             dataArr: result
         })
     })
@@ -35,7 +35,7 @@ router.get('/purchase_detail', (req, res) => {
             user = req.session.user.id
         res.render('purchase_detail.ejs', {
             user,
-            login: islogin,
+            login: (req.session.user ? true : false),
             data: result[0]
         })
     })
@@ -57,7 +57,7 @@ router.get('/close', (req, res) => {
             user = req.session.user.id
         res.render('purchase_detail.ejs', {
             user,
-            login: islogin,
+            login: (req.session.user ? true : false),
             data: result[1][0]
         })
     })
@@ -68,7 +68,7 @@ router.get('/close', (req, res) => {
 router.get('/purchase_input', auth, (req, res) => {
 
     res.render('purchase_input.ejs', {
-        login: islogin
+        login: (req.session.user ? true : false)
     })
 })
 
@@ -92,7 +92,7 @@ router.get('/purchase_search', (req, res) => {
         res.render('purchase_search.ejs', {
             method: 'all',
             dataArr: result,
-            login: req.session.user
+            login: (req.session.user ? true : false)
         })
     })
 })

@@ -43,7 +43,7 @@ app.use('/', searchRouter);
 //에러페이지
 app.get('*', (req, res) => {
     res.render('error.ejs', {
-        login: req.session.user
+        login: (req.session.user ? true : false)
     })
 })
 

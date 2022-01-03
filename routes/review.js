@@ -24,7 +24,7 @@ router.get('/review', (req, res) => {
         res.render('review.ejs', {
             method: 'all',
             dataArr: result,
-            login: islogin
+            login: (req.session.user ? true : false)
         })
     })
 })
@@ -54,7 +54,7 @@ router.post('/review', (req, res) => {
 //후기 작성 페이지(get)
 router.get('/review_writing', auth, (req, res) => {
     res.render('review_writing.ejs', {
-        login: islogin
+        login: (req.session.user ? true : false)
     })
 })
 router.post('/review_writing', async(req, res) => {
@@ -78,7 +78,7 @@ router.get('/review_reform', (req, res) => {
         res.render('review_reform.ejs', {
             prodName: result[0].prodName,
             idx: req.query.Idx,
-            login: islogin
+            login: (req.session.user ? true : false)
         })
     })
 })

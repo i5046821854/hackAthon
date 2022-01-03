@@ -10,7 +10,7 @@ router.get('', (req, res) => {
 //메인 페이지(get)
 router.get('/main', (req, res) => {
     res.render('main.ejs', {
-        login: islogin
+        login: (req.session.user ? true : false)
     })
 })
 
