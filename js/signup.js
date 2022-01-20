@@ -63,7 +63,7 @@ function signup() {
                     }
                 },
                 error: function(result) {
-                    alert("정상적인 입력이 아asd닙니다. 다시 입력해주세요");
+                    alert("정상적인 입력이 아닙니다. 다시 입력해주세요");
                 }
             });
         }
